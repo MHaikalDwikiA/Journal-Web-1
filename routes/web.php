@@ -4,9 +4,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Middleware\Authenticate;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +47,53 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::delete('/{id}', 'remove')->name('remove');
     });
 
+    Route::controller(SchoolYearController::class)->prefix('school-years')->name('school-years.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
+    });
+
+    Route::controller(ClassroomController::class)->prefix('classrooms')->name('classrooms.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
+    });
+
+    Route::controller(StudentController::class)->prefix('students')->name('students.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
+        Route::post('/import', 'import')->name('import');
+    });
+
+    Route::controller(SchoolController::class)->prefix('school')->name('school.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+    });
+
+    Route::controller(CompanyController::class)->prefix('companies')->name('companies.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+    });
+
     Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::put('/', 'update')->name('update');
     });
 });
+
+

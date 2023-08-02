@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Hash;
-use Storage;
-use Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -61,7 +62,7 @@ class ProfileController extends Controller
 
         if ($request->hasFile('photo') && !empty($request->photo)) {
             $file = $request->file('photo');
-            $fileName = \Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/avatars', $fileName);
 
             $user->photo = "avatars/{$fileName}";
