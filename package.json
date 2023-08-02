@@ -1,0 +1,26 @@
+{
+    "private": true,
+    "name": "dreampos-laravel",
+    "version": "1.1.6",
+    "author": "Dreamguys",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "axios": "^1.1.2",
+        "laravel-mix": "^6.0.49",
+        "laravel-vite-plugin": "^0.7.2",
+        "lodash": "^4.17.19",
+        "postcss": "^8.1.14",
+        "sas": "^3.0.4",
+        "sass": "^1.63.4",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "dropify": "^0.2.2",
+        "laravel-vite-plugin": "^0.7.4",
+        "vite": "^4.1.4",
+        "vite-plugin-static-copy": "^0.13.0"
+    }
+}
