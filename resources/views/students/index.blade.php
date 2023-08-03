@@ -1,3 +1,5 @@
+@section('title', 'Siswa')
+
 @extends('layout.mainlayout')
 @section('content')
     @component('components.breadcrumb')
@@ -14,11 +16,6 @@
             <a href="{{ route('students.create') }}" class="btn add-btn">
                 <i class="fa fa-plus"></i> Tambah Siswa Baru
             </a>
-            <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data" class="d-inline">
-                @csrf
-                <input type="file" name="import_file" accept=".xls,.xlsx">
-                <button type="submit" class="btn btn-primary">Import Excel</button>
-            </form>
         @endslot
     @endcomponent
 
@@ -28,6 +25,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="mb-3">
+                        <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data"
+                            class="d-inline">
+                            @csrf
+                            <input class="form-control form-control-sm" id="formFileSm" type="file" name="import_file"
+                                accept=".xls,.xlsx">
+                        </form>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped custom-table no-footer mb-0 datatable">
                             <thead>
@@ -50,7 +55,7 @@
                                         <td>{{ $student->name }}</td>
                                         <td>{{ $student->gender }}</td>
                                         <td>{{ $student->phone }}</td>
-                                        <td>{{ $student->user_id }}</td>
+                                        <td>{{ $student->user->username }}</td>
                                         <td>{{ $student->password_hint }}</td>
                                         <td class="text-end">
                                             <a href="{{ route('students.edit', $student->id) }}"
@@ -59,8 +64,10 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+                                                <button type="button"
+                                                        data-action="{{ route('students.remove', $student->id) }}"
+                                                        data-confirm-text="Anda yakin menghapus siswa ini?"
+                                                        class="btn btn-danger btn-sm btn-delete btn-sm">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

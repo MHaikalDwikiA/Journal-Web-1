@@ -14,7 +14,7 @@
         @endslot
         @slot('action_button')
             <a href="{{ route('classrooms.create') }}" class="btn add-btn">
-                <i class="fa fa-plus"></i> Tambah Tahun Pelajaran Baru
+                <i class="fa fa-plus"></i> Tambah Kelas Baru
             </a>
         @endslot
     @endcomponent
@@ -37,6 +37,7 @@
                                             <th>Program Keahlian</th>
                                             <th>Program Kompetensi</th>
                                             <th width="10%">Aksi</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,7 +53,7 @@
                                                         class="btn btn-sm btn-success">Edit</a>
                                                     <button type="button"
                                                         data-action="{{ route('classrooms.remove', $classroom->id) }}"
-                                                        data-confirm-text="Anda yakin menghapus pengguna ini?"
+                                                        data-confirm-text="Anda yakin menghapus kelas ini?"
                                                         class="btn btn-danger btn-sm btn-delete btn-sm">
                                                         Hapus
                                                     </button>

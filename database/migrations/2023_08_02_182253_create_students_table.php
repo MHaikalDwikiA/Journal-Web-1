@@ -12,7 +12,7 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('school_year_id')->nullable();
             $table->unsignedInteger('classroom_id')->nullable();
-            $table->string('identity');
+            $table->string('identity')->unique();
             $table->string('name');
             $table->string('phone');
             $table->date('birth_date')->nullable();

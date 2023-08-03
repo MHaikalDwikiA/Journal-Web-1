@@ -27,6 +27,11 @@ class ClassroomController extends Controller
             'name' => 'required|string|max:255',
             'vocational_program' => 'required|string|max:255',
             'vocational_competency' => 'required|string|max:255',
+        ], [
+            'school_year_id.required' => 'Tahun pelajaran harus diisi',
+            'name.required' => 'Kelas harus diisi',
+            'vocational_program.required' => 'Program keahlian harus diisi',
+            'vocational_competency.required' => 'Program kompetensi harus diisi',
         ]);
 
         Classroom::create($data);
@@ -54,8 +59,13 @@ class ClassroomController extends Controller
         $data = $request->validate([
             'school_year_id' => 'required|exists:school_years,id',
             'name' => 'required|string|max:255',
-            'vocational_program' => 'nullable|string|max:255',
-            'vocational_competency' => 'nullable|string|max:255',
+            'vocational_program' => 'required|string|max:255',
+            'vocational_competency' => 'required|string|max:255',
+        ], [
+            'school_year_id.required' => 'Tahun pelajaran harus diisi',
+            'name.required' => 'Kelas harus diisi',
+            'vocational_program.required' => 'Program keahlian harus diisi',
+            'vocational_competency.required' => 'Program kompetensi harus diisi',
         ]);
 
         $classroom->update($data);

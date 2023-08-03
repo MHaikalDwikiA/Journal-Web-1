@@ -8,6 +8,7 @@ class Student extends Model
 {
     protected $fillable =
     [
+        'classroom_id',
         'identity',
         'name',
         'gender',
@@ -21,14 +22,9 @@ class Student extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
-
-    public function schoolYear()
-    {
-        return $this->belongsTo(SchoolYear::class);
-    }
-
+    
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

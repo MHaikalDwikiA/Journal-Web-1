@@ -36,7 +36,7 @@
                             <label class="col-lg-3 col-form-label">Nama Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="name" class="select select2-hidden-accessible">
-                                    <option selected>Pilih Kelas Kalian</option>
+                                    <option selected disabled>Pilih Kelas Kalian</option>
                                     <option>XI</option>
                                     <option>XII</option>
                                 </select>
@@ -46,14 +46,35 @@
                             <label class="col-lg-3 col-form-label">Program Keahlian<span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="vocational_program" class="form-control" required>
+                                <select name="vocational_program" class="select select2-hidden-accessible">
+                                    <option selected disabled>Pilih Program Keahlian Kalian</option>
+                                    <option>Teknik Pemanasan Tata Udara & Pendinginan</option>
+                                    <option>Teknik Instalasi Tenaga Listrik</option>
+                                    <option>Teknik Otomasi Industri</option>
+                                    <option>Desain Permodelan dan Informasi Bangunan</option>
+                                    <option>Rekayasa Perangkat Lunak</option>
+                                    <option>Teknik Komputer dan Jaringan</option>
+                                    <option>Teknik Kendaraan Ringan</option>
+                                    <option>Teknik Bodi Kendaraan Ringan</option>
+                                    <option>Teknik Elektronika Industri</option>
+                                    <option>Teknik Pemesinan</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Program Kompetensi<span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="vocational_competency" class="form-control" required>
+                                <select name="vocational_competency" class="select select2-hidden-accessible">
+                                    <option selected disabled>Pilih Program Kompetensi Kalian</option>
+                                    <option>Teknik Ketenagalistrikan</option>
+                                    <option>Teknik Desain Permodelan dan Informasi Bangunan</option>
+                                    <option>Pengembangan Perangkat Lunak dan Gim</option>
+                                    <option>Teknik Jaringan Komputer dan Telekomunikasi</option>
+                                    <option>Teknik Otomotif</option>
+                                    <option>Teknik Mesin</option>
+                                    <option>Teknik Elektronika</option>
+                                </select>
                             </div>
                         </div>
                         <div class="card-footer text-end">
