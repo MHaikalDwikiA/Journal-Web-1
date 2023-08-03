@@ -31,10 +31,10 @@ class SchoolYearController extends Controller
             'headmaster_name' => 'required|max:255',
             'is_active' => 'required|boolean',
         ],  [
-            'name.required' => 'Tahun pelajaran harus diisi!',
-            'name.unique' => 'Tahun pelajaran telah digunakan!',
-            'headmaster_name.required' => 'Nama Kepala sekolah harus diisi!',
-            'headmaster_name.max' => 'Nama Kepala sekolah tidak boleh lebih dari 255 karakter.',
+            'name.required' => 'Tahun harus diisi!',
+            'name.unique' => 'Tahun telah digunakan!',
+            'headmaster_name.required' => 'headmaster_name harus diisi!',
+            'headmaster_name.max' => 'Nama Kepala Sekolah tidak boleh lebih dari 255 karakter.',
             'is_active.required' => 'Status harus diisi!',
             'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
         ]);

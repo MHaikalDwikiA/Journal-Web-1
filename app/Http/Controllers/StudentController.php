@@ -9,6 +9,7 @@ use App\Models\Classroom;
 use App\Models\SchoolYear;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
@@ -36,7 +37,7 @@ class StudentController extends Controller
             'name' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
+            'user_username' => 'required|string|unique:users,username',
             'password_hint' => 'string|max:255',
         ], [
             'identity.required' => 'NIS harus diisi',
@@ -47,8 +48,20 @@ class StudentController extends Controller
             'name.max' => 'Maksimal 255 karakter',
             'phone.required' => 'Nomer Telepon harus diisi',
             'gender.required' => 'Jenis kelamin harus diisi',
-            'user_id.required' => 'User harus diisi',
+            'user_username.required' => 'Username harus diisi',
+            'user_username.unique' => 'Username sudah digunakan',
         ]);
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->username = $request->user_username;
+            $user->password = Hash::make($request->password_hint);
+            $user->role = 'student';
+            $user->is_active = 1;
+            $user->save();
+
+        $generate_password = Str::random(5);
+        $password = bcrypt($generate_password);
 
         $student = new Student();
         $student->classroom_id = $request->classroom_id;
@@ -56,14 +69,11 @@ class StudentController extends Controller
         $student->name = $request->name;
         $student->gender = $request->gender;
         $student->phone = $request->phone;
-        $student->user_id = $request->user_id;
-        if ($request->password_hint) {
-            $student->password_hint = bcrypt($request->password);
-        }
+        $student->user_id = $user->id;
+        $student->password_hint = $password;
         $student->save();
-
-        return redirect()->route('students.index')
-            ->with('success', 'Siswa berhasil dibuat.');
+    
+        return redirect()->route('students.index')->withSuccess('Siswa berhasil ditambahkan');
     }
 
     public function edit(Student $student, $id)

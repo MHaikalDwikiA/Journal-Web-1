@@ -9,10 +9,6 @@
         @slot('li_1')
             Kelas
         @endslot
-        @slot('li_2')
-            Form Tambah Kelas Baru
-        @endslot
-    @endcomponent
 
     <x-alert />
 
