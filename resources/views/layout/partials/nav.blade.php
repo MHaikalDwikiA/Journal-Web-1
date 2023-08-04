@@ -65,6 +65,12 @@
                         'childs' => [],
                     ],
                     (object) [
+                        'name' => 'Pembimbing Perusahaan',
+                        'icon' => 'la la-user',
+                        'link' => 'company-advisors',
+                        'childs' => [],
+                    ],
+                    (object) [
                         'title' => 'Akun',
                     ],
                     (object) [

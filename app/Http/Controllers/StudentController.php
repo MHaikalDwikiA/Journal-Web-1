@@ -52,16 +52,13 @@ class StudentController extends Controller
             'user_username.unique' => 'Username sudah digunakan',
         ]);
 
-            $user = new User();
-            $user->name = $request->name;
-            $user->username = $request->user_username;
-            $user->password = Hash::make($request->password_hint);
-            $user->role = 'student';
-            $user->is_active = 1;
-            $user->save();
-
-        $generate_password = Str::random(5);
-        $password = bcrypt($generate_password);
+        $user = new User();
+        $user->name = $request->name;
+        $user->username = $request->user_username;
+        $user->password = bcrypt($request->password_hint);
+        $user->role = 'student';
+        $user->is_active = 1;
+        $user->save();
 
         $student = new Student();
         $student->classroom_id = $request->classroom_id;
@@ -70,9 +67,9 @@ class StudentController extends Controller
         $student->gender = $request->gender;
         $student->phone = $request->phone;
         $student->user_id = $user->id;
-        $student->password_hint = $password;
+        $student->password_hint = $request->password_hint;
         $student->save();
-    
+
         return redirect()->route('students.index')->withSuccess('Siswa berhasil ditambahkan');
     }
 

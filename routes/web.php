@@ -5,6 +5,7 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\CompanyAdvisorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -66,6 +67,16 @@ Route::middleware([Authenticate::class])->group(function () {
     });
 
     Route::controller(StudentController::class)->prefix('students')->name('students.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
+        Route::post('/import', 'import')->name('import');
+    });
+
+    Route::controller(CompanyAdvisorController::class)->prefix('company-advisors')->name('company-advisors.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::get('/{id}/edit', 'edit')->name('edit');

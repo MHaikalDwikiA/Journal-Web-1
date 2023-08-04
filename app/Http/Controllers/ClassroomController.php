@@ -8,11 +8,23 @@ use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $classrooms = Classroom::all();
-        return view('classrooms.index', compact('classrooms'));
+        $activeSchoolYears = SchoolYear::where('is_active', true)->get();
+        $inactiveSchoolYears = SchoolYear::where('is_active', false)->get();
+        $classrooms = Classroom::query();
+        if ($request->has('year')) {
+            if ($request->year === 'all') {
+            } else {
+                $classrooms->where('school_year_id', $request->year);
+            }
+        } else {
+            $classrooms->where('school_year_id', $activeSchoolYears->first()->id);
+        }
+        $classrooms = $classrooms->get();
+        return view('classrooms.index', compact('classrooms', 'activeSchoolYears', 'inactiveSchoolYears'));
     }
+
 
     public function create()
     {
@@ -24,13 +36,14 @@ class ClassroomController extends Controller
     {
         $data = $request->validate([
             'school_year_id' => 'required|exists:school_years,id',
-            'name' => 'required|string|max:255',
-            'vocational_program' => 'required|string|max:255',
-            'vocational_competency' => 'required|string|max:255',
+            'name' => 'required|string',
+            'vocational_program' => 'required|string',
+            'vocational_competency' => 'required|string',
         ], [
             'school_year_id.required' => 'Tahun pelajaran harus diisi',
             'name.required' => 'Kelas harus diisi',
             'vocational_program.required' => 'Program keahlian harus diisi',
+            'vocational_program.unique' => 'Kelas sudah ada',
             'vocational_competency.required' => 'Program kompetensi harus diisi',
         ]);
 
@@ -58,9 +71,9 @@ class ClassroomController extends Controller
 
         $data = $request->validate([
             'school_year_id' => 'required|exists:school_years,id',
-            'name' => 'required|string|max:255',
-            'vocational_program' => 'required|string|max:255',
-            'vocational_competency' => 'required|string|max:255',
+            'name' => 'required|string',
+            'vocational_program' => 'required|string',
+            'vocational_competency' => 'required|string',
         ], [
             'school_year_id.required' => 'Tahun pelajaran harus diisi',
             'name.required' => 'Kelas harus diisi',
