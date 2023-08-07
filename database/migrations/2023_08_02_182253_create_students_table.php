@@ -14,11 +14,11 @@ class CreateStudentsTable extends Migration
             $table->unsignedInteger('classroom_id')->nullable();
             $table->string('identity')->unique();
             $table->string('name');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
             $table->string('religion')->nullable();
-            $table->string('gender');
+            $table->string('gender')->nullable();
             $table->string('address')->nullable();
             $table->string('photo')->nullable();
             $table->string('blood_type')->nullable();

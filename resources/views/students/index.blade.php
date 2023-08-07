@@ -48,8 +48,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Import</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                 </div>
                             </form>
                         </div>
@@ -65,8 +64,6 @@
                                     <th width="10%">No</th>
                                     <th>NIS</th>
                                     <th>Nama</th>
-                                    <th>Gender</th>
-                                    <th>Nomer Handphone</th>
                                     <th>Username</th>
                                     <th>Password</th>
                                     <th width="10%">Aksi</th>
@@ -78,8 +75,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $student->identity }}</td>
                                         <td>{{ $student->name }}</td>
-                                        <td>{{ $student->gender }}</td>
-                                        <td>{{ $student->phone }}</td>
                                         <td>{{ $student->user->username }}</td>
                                         <td>{{ $student->password_hint }}</td>
                                         <td class="text-end">

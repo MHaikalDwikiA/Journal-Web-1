@@ -23,9 +23,20 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Tahun Pelajaran<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <select name="school_year_id" class="select select2-hidden-accessible">
+                                    @foreach ($schoolYears as $year)
+                                        <option value="{{ $year->id }}">{{ $year->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="classroom_id" class="select select2-hidden-accessible">
+                                    <option selected disabled>Pilih Kelas Kalian</option>
                                     @foreach ($classrooms as $classroom)
                                         <option value="{{ $classroom->id }}">{{ $classroom->name }}
                                             {{ $classroom->vocational_program }}</option>
@@ -37,7 +48,8 @@
                             <label class="col-lg-3 col-form-label">NIS<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="identity"
-                                    class="form-control @error('identity') is-invalid @enderror">
+                                    class="form-control @error('identity') is-invalid @enderror"
+                                    value="{{ old('identity') }}">
                                 <div class="invalid-feedback">
                                     @error('identity')
                                         {{ $message }}
@@ -49,7 +61,7 @@
                             <label class="col-lg-3 col-form-label">Nama<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="name"
-                                    class="form-control @error('name') is-invalid @enderror">
+                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                             </div>
                             <div class="invalid-feedback">
                                 @error('name')
@@ -58,38 +70,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="gender"
-                                    class="select select2-hidden-accessible @error('gender') is-invalid @enderror">
-                                    <option selected disabled>Pilih Kelamin Kalian</option>
-                                    <option>Laki-laki</option>
-                                    <option>Perempuan</option>
-                                </select>
-                            </div>
-                            <div class="invalid-feedback">
-                                @error('gender')
-                                    {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nomer Handphone<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <input type="text" name="phone"
-                                    class="form-control @error('phone') is-invalid @enderror">
-                            </div>
-                            <div class="invalid-feedback">
-                                @error('phone')
-                                    {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">User<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="user_username"
-                                    class="form-control @error('user_username') is-invalid @enderror">
+                                    class="form-control @error('user_username') is-invalid @enderror"
+                                    value="{{ old('user_username') }}">
                             </div>
                             <div class="invalid-feedback">
                                 @error('user_username')
@@ -102,8 +87,8 @@
                             <div class="col-lg-9">
                                 <div class="input-group">
                                     <input type="password" name="password_hint"
-                                        class="form-control @error('password_hint') is-invalid @enderror" id="passwordInput"
-                                        readonly>
+                                        class="form-control @error('password_hint') is-invalid @enderror"
+                                        id="passwordInput">
                                     <button class="btn btn-outline-secondary" style="width: 50px" type="button"
                                         id="togglePassword">
                                         <span class="fa fa-eye-slash"></span>

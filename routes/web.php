@@ -13,6 +13,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,15 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
         Route::post('/import', 'import')->name('import');
+    });
+
+    Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
     });
 
     Route::controller(SchoolController::class)->prefix('school')->name('school.')->group(function () {

@@ -10,21 +10,14 @@ class ClassroomController extends Controller
 {
     public function index(Request $request)
     {
-        $activeSchoolYears = SchoolYear::where('is_active', true)->get();
-        $inactiveSchoolYears = SchoolYear::where('is_active', false)->get();
+        $schoolYears = SchoolYear::all();
         $classrooms = Classroom::query();
-        if ($request->has('year')) {
-            if ($request->year === 'all') {
-            } else {
-                $classrooms->where('school_year_id', $request->year);
-            }
-        } else {
-            $classrooms->where('school_year_id', $activeSchoolYears->first()->id);
+        if ($request->has('year') && $request->year !== 'all') {
+            $classrooms->where('school_year_id', $request->year);
         }
         $classrooms = $classrooms->get();
-        return view('classrooms.index', compact('classrooms', 'activeSchoolYears', 'inactiveSchoolYears'));
+        return view('classrooms.index', compact('classrooms', 'schoolYears'));
     }
-
 
     public function create()
     {

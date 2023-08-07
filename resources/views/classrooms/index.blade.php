@@ -29,7 +29,7 @@
                         <div class="form-group form-focus select-focus">
                             <select name="year" class="form-control">
                                 @php
-                                    $allYears = $activeSchoolYears->merge($inactiveSchoolYears);
+                                    $allYears = $schoolYears;
                                 @endphp
                                 <option value="all" {{ request('year') === 'all' ? 'selected' : '' }}>Semua</option>
                                 @foreach ($allYears as $year)

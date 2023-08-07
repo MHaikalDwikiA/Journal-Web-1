@@ -47,11 +47,6 @@
                                         @enderror
                                     </div>
                                 </select>
-                                <div class="invalid-feedback">
-                                    @error('name')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
                             </div>
                         </div>
                         <div class="form-group row">

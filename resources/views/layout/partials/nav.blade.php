@@ -25,21 +25,21 @@
                         'link' => 'companies',
                         'childs' => [],
                     ],
-                    // (object) [
-                    //     'name' => 'Menu',
-                    //     'icon' => 'la la-calendar',
-                    //     'link' => 'menu-path',
-                    //     'childs' => [
-                    //         (object) [
-                    //             'name' => 'Sub menu 1',
-                    //             'link' => 'sub-menu-1-path',
-                    //         ],
-                    //         (object) [
-                    //             'name' => 'Sub menu 2',
-                    //             'link' => 'sub-menu-2-path',
-                    //         ],
-                    //     ],
-                    // ],
+                    (object) [
+                        'name' => 'Menu',
+                        'icon' => 'la la-calendar',
+                        'link' => 'menu-path',
+                        'childs' => [
+                            (object) [
+                                'name' => 'Sub menu 1',
+                                'link' => 'sub-menu-1-path',
+                            ],
+                            (object) [
+                                'name' => 'Sub menu 2',
+                                'link' => 'sub-menu-2-path',
+                            ],
+                        ],
+                    ],
                     (object) [
                         'name' => 'Pengguna',
                         'icon' => 'la la-user-cog',
@@ -60,14 +60,20 @@
                     ],
                     (object) [
                         'name' => 'Siswa',
-                        'icon' => 'la la-user',
+                        'icon' => 'la la-graduation-cap',
                         'link' => 'students',
                         'childs' => [],
                     ],
                     (object) [
                         'name' => 'Pembimbing Perusahaan',
-                        'icon' => 'la la-user',
+                        'icon' => 'la la-user-tie',
                         'link' => 'company-advisors',
+                        'childs' => [],
+                    ],
+                    (object) [
+                        'name' => 'Notifikasi',
+                        'icon' => 'la la-bell',
+                        'link' => 'notifications',
                         'childs' => [],
                     ],
                     (object) [

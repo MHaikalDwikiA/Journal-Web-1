@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Imports\StudentsImport;
-use App\Models\User;
-use App\Models\Student;
 use App\Models\Classroom;
 use App\Models\SchoolYear;
-use Illuminate\Support\Str;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
@@ -23,15 +21,16 @@ class StudentController extends Controller
     public function create()
     {
         $students = Student::all();
+        $schoolYears = SchoolYear::all();
         $classrooms = Classroom::all();
-        $users = User::where('role', 'student')->get();
-        $hashed_random_password = Str::random(6);
-        return view('students.create', compact('students', 'classrooms', 'users', 'hashed_random_password'));
+        $users = User::all();
+        return view('students.create', compact('students', 'schoolYears', 'classrooms', 'users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'school_year_id' => 'required|exists:school_years,id',
             'classroom_id' => 'required|exists:classrooms,id',
             'identity' => 'required|string|max:255',
             'name' => 'required|string|max:255',
@@ -61,6 +60,7 @@ class StudentController extends Controller
         $user->save();
 
         $student = new Student();
+        $student->school_year_id = $request->school_year_id;
         $student->classroom_id = $request->classroom_id;
         $student->identity = $request->identity;
         $student->name = $request->name;
@@ -73,63 +73,56 @@ class StudentController extends Controller
         return redirect()->route('students.index')->withSuccess('Siswa berhasil ditambahkan');
     }
 
-    public function edit(Student $student, $id)
+    public function edit($id)
     {
-        $student = Student::find($id);
+        $classrooms = Classroom::all();
         $users = User::where('role', 'student')->get();
-        $hashed_random_password = Str::random(6);
-        abort_if(!$student, 400, 'Siswa tidak ditemukan');
+        $schoolYears = SchoolYear::all();
+        $student = Student::find($id);
+        abort_if(!$student, 400, 'Student not found');
 
-        return view('students.edit', compact('student', 'users', 'hashed_random_password'));
+        return view('students.edit', compact('student', 'classrooms', 'schoolYears', 'users'));
     }
 
     public function update(Request $request, $id)
     {
         $student = Student::find($id);
-        abort_if(!$student, 404, 'Siswa tidak ditemukan');
+        abort_if(!$student, 400, 'Student not found');
 
         $request->validate([
-            'identity' => 'required|string|max:255|unique:students,identity,' . $student->id,
+            'school_year_id' => 'required|exists:school_years,id',
+            'classroom_id' => 'required|exists:classrooms,id',
+            'identity' => 'required|string|max:255|unique:students,id',
             'name' => 'required|string|max:255',
-            'gender' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
-            'password_hint' => 'string|max:255',
+            'password_hint' => 'required',
         ], [
             'identity.required' => 'NIS harus diisi',
-            'identity.string' => 'NIS hanya boleh diisi karakter A-Z a-z',
-            'identity.max' => 'Maksimal 255 karakter',
-            'identity.unique' => 'NIS sudah digunakan oleh siswa lain',
+            'identity.max' => 'NIS maksimal 255 karakter',
+            'identity.unique' => 'NIS sudah digunakan',
             'name.required' => 'Nama harus diisi',
-            'name.string' => 'Nama hanya boleh diisi karakter A-Z a-z',
-            'name.max' => 'Maksimal 255 karakter',
-            'phone.required' => 'Nomer Telepon harus diisi',
-            'gender.required' => 'Jenis kelamin harus diisi',
-            'user_id.required' => 'User harus diisi',
+            'name.max' => 'Nama maksimal 255 karakter',
+            'phone.required' => 'Nomer Telepon harus diisi'
         ]);
 
+        $student->school_year_id = $request->school_year_id;
+        $student->classroom_id = $request->classroom_id;
         $student->identity = $request->identity;
         $student->name = $request->name;
-        $student->gender = $request->gender;
-        $student->phone = $request->phone;
-        $student->user_id = $request->user_id;
         $student->password_hint = $request->password_hint;
-
         $student->save();
 
-        return redirect()->route('students.index')
-            ->with('success', 'Siswa berhasil diedit.');
+        return redirect()->route('students.index')->withSuccess('Siswa Berhasil ditambahkan');
     }
 
-    public function remove(Student $student, $id)
+    public function remove($id)
     {
         $student = Student::find($id);
-        abort_if(!$student, 400, 'Siswa tidak ditemukan');
+        abort_if(!$student, 400, 'Student not found');
 
         $student->delete();
 
         return redirect()->route('students.index')
-            ->with('success', 'Siswa berhasil dihapus.');
+            ->withSuccess('Student deleted successfully.');
     }
 
     public function import(Request $request)
@@ -142,7 +135,7 @@ class StudentController extends Controller
             Excel::import(new StudentsImport, $request->file('import_file'));
             return redirect()->route('students.index')->with('success', 'Data siswa berhasil diimpor.');
         } catch (\Exception $e) {
-            return redirect()->route('students.index')->with('error', 'Terjadi kesalahan saat mengimpor data siswa.');
+            return redirect()->route('students.index')->with('error', 'Terjadi kesalahan saat mengimpor data siswa.' . $e->getMessage());
         }
     }
 }

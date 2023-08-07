@@ -78,7 +78,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Jenis kelamin <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select name="gender" class="form-control">
+                                <select name="gender" class="form-control select select2-hidden-accessible">
                                     <option value="Laki-laki" @if (old('gender', $advisor->gender) == 'Laki-laki') selected @endif>Laki-laki
                                     </option>
                                     <option value="Perempuan" @if (old('gender', $advisor->gender) == 'Perempuan') selected @endif>Perempuan
