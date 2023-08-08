@@ -27,33 +27,8 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ImportSiswaModal">
                     Import Data Siswa
                 </button>
-
-                <div class="modal fade" id="ImportSiswaModal" tabindex="-1" aria-labelledby="ImportSiswaModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="ImportSiswaModalLabel">Import Data Siswa</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="formFileSm" class="form-label">Pilih File</label>
-                                        <input class="form-control form-control-sm" id="formFileSm" type="file"
-                                            name="import_file" accept=".xls,.xlsx">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Import</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <a href="{{ asset('files/Insert-Siswa.xlsx') }}" class="btn btn-primary">Unduh
+                    Template Excel</a>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -100,3 +75,29 @@
         </div>
     </div>
 @endsection
+@push('after-body')
+    <div class="modal fade" id="ImportSiswaModal" tabindex="-1" aria-labelledby="ImportSiswaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ImportSiswaModalLabel">Import Data Siswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="formFileSm" class="form-label">Pilih File</label>
+                            <input class="form-control form-control-sm" id="formFileSm" type="file" name="import_file"
+                                accept=".xls,.xlsx">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Import</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endpush
