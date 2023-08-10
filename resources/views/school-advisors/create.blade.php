@@ -1,16 +1,16 @@
-@section('title', 'Siswa')
+@section('title', 'Tambah Pembimbing Sekolah')
 
 @extends('layout.mainlayout')
 @section('content')
     @component('components.breadcrumb')
         @slot('title')
-            Siswa
+            Pembimbing Sekolah
         @endslot
         @slot('li_1')
-            Siswa
+            Pembimbing Sekolah
         @endslot
         @slot('li_2')
-            Form Tambah Siswa Baru
+            Form Tambah Baru
         @endslot
     @endcomponent
 
@@ -19,40 +19,11 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <div class="card">
-                <form method="POST" action="{{ route('students.store') }}">
+                <form action="{{ route('school-advisors.store') }}" method="post">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Tahun Pelajaran<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="school_year_id" class="select select2-hidden-accessible">
-                                    @foreach ($schoolYears as $year)
-                                        <option value="{{ $year->id }}">{{ $year->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Kelas<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="classroom_id"
-                                    class="select select2-hidden-accessible @error('classroom_id') is-invalid @enderror"
-                                    value="{{ old('classroom_id') }}">
-                                    <option selected disabled>Pilih Kelas Kalian</option>
-                                    @foreach ($classrooms as $classroom)
-                                        <option value="{{ $classroom->id }}">{{ $classroom->name }}
-                                            {{ $classroom->vocational_program }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    @error('classroom_id')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">NIS<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">NIP <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="identity"
                                     class="form-control @error('identity') is-invalid @enderror"
@@ -65,7 +36,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nama<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">Nama <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
@@ -77,12 +48,59 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">No. HP <span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" name="phone"
+                                    class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
+                                <div class="invalid-feedback">
+                                    @error('phone')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Alamat <span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <textarea name="address" rows="5" class="form-control @error('address') is-invalid @enderror">{{ old('address') }}</textarea>
+                                <div class="invalid-feedback">
+                                    @error('address')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Jenis kelamin <span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <select name="gender" class="form-control @error('gender') is-invalid @enderror">
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    @error('gender')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <label class="col-lg-3 col-form-label">Status</label>
+                            <div class="col-lg-9">
+                                <select class="form-control" name="is_active">
+                                    <option value="0" @if (old('is_active') == 0) selected @endif>Tidak Aktif
+                                    </option>
+                                    <option value="1" @if (old('is_active') == 1) selected @endif>Aktif</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <div class="input-group">
                                     <input type="password" name="password_hint"
-                                        class="form-control @error('password_hint') is-invalid @enderror" id="passwordInput"
-                                        value="{{ old('password_hint') }}">
+                                        class="form-control @error('password_hint') is-invalid @enderror"
+                                        id="passwordInput">
                                     <button class="btn btn-outline-secondary" style="width: 50px" type="button"
                                         id="togglePassword">
                                         <span class="fa fa-eye-slash"></span>
@@ -99,7 +117,10 @@
                         </div>
                     </div>
                     <div class="card-footer text-end">
-                        <a class="btn btn-secondary" href="{{ route('students.index') }}">Kembali</a>
+                        <span class="text-muted float-start">
+                            <strong class="text-danger">*</strong> Harus diisi
+                        </span>
+                        <a class="btn btn-secondary" href="{{ route('school-advisors.index') }}">Kembali</a>
                         <button class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
@@ -107,11 +128,11 @@
         </div>
     </div>
 @endsection
+
 @push('scripts')
     <script>
         const passwordInput = document.getElementById('passwordInput');
         const toggleButton = document.getElementById('togglePassword');
-        const passwordError = document.getElementById('passwordError');
         const generateButton = document.getElementById('generatePassword');
 
         toggleButton.addEventListener('click', function() {
@@ -138,6 +159,3 @@
         });
     </script>
 @endpush
-
-
-

@@ -14,6 +14,7 @@ use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SchoolAdvisorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,12 +85,21 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
-        Route::post('/import', 'import')->name('import');
+    });
+
+    Route::controller(SchoolAdvisorController::class)->prefix('school-advisors')->name('school-advisors.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
     });
 
     Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
+        Route::get('/{id}', 'show')->name('show');
         Route::get('/{id}/edit', 'edit')->name('edit');
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
@@ -116,5 +126,3 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::put('/', 'update')->name('update');
     });
 });
-
-

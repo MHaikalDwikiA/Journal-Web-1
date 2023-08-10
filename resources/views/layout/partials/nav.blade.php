@@ -71,6 +71,12 @@
                         'childs' => [],
                     ],
                     (object) [
+                        'name' => 'Pembimbing Sekolah',
+                        'icon' => 'la la-user',
+                        'link' => 'school-advisors',
+                        'childs' => [],
+                    ],
+                    (object) [
                         'name' => 'Notifikasi',
                         'icon' => 'la la-bell',
                         'link' => 'notifications',
@@ -92,7 +98,7 @@
                         'childs' => [],
                     ],
                 ];
-
+                
                 ?>
                 @foreach ($menus as $menu)
                     @if (isset($menu->title))

@@ -21,8 +21,9 @@ class ClassroomController extends Controller
 
     public function create()
     {
+        $activeSchoolYear = SchoolYear::where('is_active', true)->first();
         $schoolYears = SchoolYear::all();
-        return view('classrooms.create', compact('schoolYears'));
+        return view('classrooms.create', compact('schoolYears', 'activeSchoolYear'));
     }
 
     public function store(Request $request)
@@ -36,7 +37,6 @@ class ClassroomController extends Controller
             'school_year_id.required' => 'Tahun pelajaran harus diisi',
             'name.required' => 'Kelas harus diisi',
             'vocational_program.required' => 'Program keahlian harus diisi',
-            'vocational_program.unique' => 'Kelas sudah ada',
             'vocational_competency.required' => 'Program kompetensi harus diisi',
         ]);
 

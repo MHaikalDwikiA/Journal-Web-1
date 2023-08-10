@@ -44,10 +44,12 @@
                                                 <td>{{ $notification->id }}</td>
                                                 <td>{{ $notification->date }}</td>
                                                 <td>{{ $notification->title }}</td>
-                                                <td style="height: 2.5em; overflow: hidden;">{{ $notification->description }}</td>
+                                                <td>{{ Str::substr($notification->description, 0, 50)  }}</td>
                                                 <td class="text-end">
                                                     <a href="{{ route('notifications.edit', $notification->id) }}"
                                                         class="btn btn-sm btn-success">Edit</a>
+                                                    <a href="{{ route('notifications.show', $notification->id) }}"
+                                                        class="btn btn-sm btn-primary">Detail</a>
                                                     <form class="d-inline"
                                                         action="{{ route('notifications.remove', $notification->id) }}"
                                                         method="POST">

@@ -25,7 +25,8 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Tanggal<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="date" name="date" class="form-control @error('date') @enderror">
+                                <input type="date" name="date"
+                                    class="form-control @error('date') is-invalid @enderror" value="{{ old('date') }}">
                                 <div class="invalid-feedback">
                                     @error('date')
                                         {{ $message }}
@@ -37,7 +38,7 @@
                             <label class="col-lg-3 col-form-label">Judul<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="title"
-                                    class="form-control @error('title') is-invalid @enderror">
+                                    class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                                 <div class="invalid-feedback">
                                     @error('title')
                                         {{ $message }}
@@ -48,13 +49,12 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Deskripsi<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <textarea rows="5" name="description"
-                                    class="form-control @error('description') is-invalid @enderror"></textarea>
-                            </div>
-                            <div class="invalid-feedback">
-                                @error('description')
-                                    {{ $message }}
-                                @enderror
+                                <textarea rows="5" name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                                <div class="invalid-feedback">
+                                    @error('description')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer text-end">

@@ -23,19 +23,24 @@ class NotificationController extends Controller
         $request->validate([
             'date' => 'required|date',
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required',
         ], [
             'date.required' => 'Tanggal harus diisi',
             'title.required' => 'Judul harus diisi',
             'title.string' => 'Judul hanya boleh diisi karakter A-Z a-z',
             'tilte.max' => 'Judul hanya boleh diisi maksimal 255 karakter!',
             'description.required' => 'Deskripsi harus diisi',
-            'description.string' => 'Deskripsi hanya boleh diisi karakter A-Z a-z'
         ]);
 
         Notification::create($request->all());
 
-        return redirect()->route('notifications.index')->with('success', 'Notification created successfully!');
+        return redirect()->route('notifications.index')->with('success', 'Notifikasi berhasil dibuat!');
+    }
+
+    public function show($id)
+    {
+        $notifications = Notification::find($id);
+        return view('notifications.show', compact('notifications'));
     }
 
     public function edit(Notification $notification, $id)
@@ -53,25 +58,27 @@ class NotificationController extends Controller
         $request->validate([
             'date' => 'required|date',
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required',
         ], [
             'date.required' => 'Tanggal harus diisi',
             'title.required' => 'Judul harus diisi',
             'title.string' => 'Judul hanya boleh diisi karakter A-Z a-z',
             'tilte.max' => 'Judul hanya boleh diisi maksimal 255 karakter!',
             'description.required' => 'Deskripsi harus diisi',
-            'description.string' => 'Deskripsi hanya boleh diisi karakter A-Z a-z'
         ]);
 
         $notification->update($request->all());
 
-        return redirect()->route('notifications.index')->with('success', 'Notification updated successfully!');
+        return redirect()->route('notifications.index')->with('success', 'Notifikasi berhasil diedit!');
     }
 
-    public function destroy(Notification $notification)
+    public function remove($id)
     {
+        $notification = Notification::find($id);
+        abort_if(!$notification, 400, 'Tahun Pelajaran tidak ditemukan');
+
         $notification->delete();
 
-        return redirect()->route('notifications.index')->with('success', 'Notification deleted successfully!');
+        return redirect()->route('notifications.index')->with('success', 'Notifikasi berhasil dihapus!');
     }
 }

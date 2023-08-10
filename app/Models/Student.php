@@ -12,8 +12,6 @@ class Student extends Model
         'classroom_id',
         'identity',
         'name',
-        'gender',
-        'phone',
         'user_id',
         'password_hint',
 

@@ -84,18 +84,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">User<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <input type="text" name="user_username"
-                                    class="form-control @error('user_username') is-invalid @enderror">
-                            </div>
-                            <div class="invalid-feedback">
-                                @error('user_username')
-                                    {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <div class="input-group">

@@ -9,7 +9,7 @@
             Notifikasi
         @endslot
         @slot('li_2')
-            Notifikasi Ubah
+            Form Ubah Notifikasi
         @endslot
     @endcomponent
 

@@ -65,7 +65,7 @@
             </form>
             <div class="card">
                 <div class="card-body">
-                    <div class="tab-content">
+                    <div class="tab-content table-responsive">
                         <table class="table table-striped custom-table no-footer mb-0 datatable">
                             <thead>
                                 <tr>

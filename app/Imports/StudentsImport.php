@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Enums\UserRole;
 use App\Models\Classroom;
+use App\Models\Internship;
 use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\User;
@@ -42,13 +43,17 @@ class StudentsImport implements ToCollection, WithHeadingRow
                     'password' => bcrypt($row['password']),
                     'is_active' => true,
                 ]);
-                Student::create([
+                $student = Student::create([
                     'school_year_id' => $schoolYear->id,
                     'classroom_id' => $classroom->id,
                     'identity' => $row['nis'],
                     'name' => $row['nama'],
                     'user_id' => $user->id,
                     'password_hint' => $row['password'],
+                ]);
+                Internship::create([
+                    'student_id' => $student->id,
+                    'school_year_id' => $student->schoolYear->id,
                 ]);
             }
             DB::commit();
