@@ -52,8 +52,8 @@
                                             <th>Identitas</th>
                                             <th>Nama</th>
                                             <th>No Hp</th>
+                                            <th>Alamat</th>
                                             <th>Jenis kelamin</th>
-                                            <th>Username</th>
                                             <th>Password</th>
                                             <th width="10%">Aksi</th>
                                         </tr>
@@ -66,8 +66,8 @@
                                                 <td>{{ $advisor->identity }}</td>
                                                 <td>{{ $advisor->name }}</td>
                                                 <td>{{ $advisor->phone }}</td>
+                                                <td>{{ $advisor->address }}</td>
                                                 <td>{{ $advisor->gender }}</td>
-                                                <td>{{ $advisor->user->username }}</td>
                                                 <td>{{ $advisor->password_hint }}</td>
                                                 <td class="text-end">
                                                     <a href="{{ route('company-advisors.edit', $advisor->id) }}"

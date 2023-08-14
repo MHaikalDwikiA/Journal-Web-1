@@ -14,6 +14,7 @@ class CreateCompanyAdvisorsTable extends Migration
             $table->string('identity');
             $table->string('name');
             $table->string('phone');
+            $table->text('address');
             $table->string('gender');
             $table->string('is_active')->default(false);
             $table->unsignedInteger('user_id')->nullable();

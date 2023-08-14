@@ -70,10 +70,7 @@
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
-                                    <th>Tahun Pelajaran</th>
-                                    <th>Kelas</th>
-                                    <th>Program Keahlian</th>
-                                    <th>Program Kompetensi</th>
+                                    <th>Nama Kelas</th>
                                     <th width="10%">Aksi</th>
                                 </tr>
                             </thead>
@@ -81,10 +78,7 @@
                                 @foreach ($classrooms as $classroom)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $classroom->schoolYear->name }}</td>
                                         <td>{{ $classroom->name }}</td>
-                                        <td>{{ $classroom->vocational_program }}</td>
-                                        <td>{{ $classroom->vocational_competency }}</td>
                                         <td class="text-end">
                                             <a href="{{ route('classrooms.edit', $classroom->id) }}"
                                                 class="btn btn-sm btn-success">Edit</a>

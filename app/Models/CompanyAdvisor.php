@@ -14,6 +14,7 @@ class CompanyAdvisor extends Model
         'identity',
         'name',
         'phone',
+        'address',
         'gender',
         'is_active',
         'user_id',

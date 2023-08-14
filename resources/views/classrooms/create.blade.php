@@ -38,12 +38,9 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Nama Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select name="name"
-                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror">
-                                    <option selected disabled>Pilih Kelas Kalian</option>
-                                    <option>XI</option>
-                                    <option>XII</option>
-                                </select>
+                                <input type="text" name="name"
+                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror"
+                                    value="{{ old('name') }}">
                                 <div class="invalid-feedback">
                                     @error('name')
                                         {{ $message }}

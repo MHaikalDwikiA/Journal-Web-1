@@ -114,8 +114,6 @@ class StudentController extends Controller
         $student->password_hint = $request->password_hint;
         $student->save();
 
-
-
         return redirect()->route('students.index')->withSuccess('Siswa Berhasil ditambahkan');
     }
 

@@ -76,6 +76,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Alamat <span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <textarea name="address" rows="5" class="form-control @error('address') is-invalid @enderror">{{ old('address', $advisor->address) }}</textarea>
+                                <div class="invalid-feedback">
+                                    @error('address')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Jenis kelamin <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="gender" class="form-control select select2-hidden-accessible">
@@ -89,19 +100,6 @@
                                         {{ $message }}
                                     @enderror
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">User<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="user_id" class="form-control">
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}"
-                                            {{ $advisor->user_id == $user->id ? 'selected' : '' }}>
-                                            {{ $user->username }}
-                                        </option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
