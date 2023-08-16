@@ -92,8 +92,6 @@ class StudentController extends Controller
         abort_if(!$student, 400, 'Siswa tidak ditemukan');
 
         $request->validate([
-            'school_year_id' => 'required|exists:school_years,id',
-            'classroom_id' => 'required|exists:classrooms,id',
             'identity' => 'required|string|max:255|unique:students,id',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:25',
@@ -114,8 +112,6 @@ class StudentController extends Controller
         $user->password = bcrypt($request->password_hint);
         $user->save();
 
-        $student->school_year_id = $request->school_year_id;
-        $student->classroom_id = $request->classroom_id;
         $student->identity = $request->identity;
         $student->name = $request->name;
         $student->phone = $request->phone;

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Internship extends Model
@@ -16,27 +15,27 @@ class Internship extends Model
         'working_day'
     ];
 
-    public function SchoolYear()
+    public function schoolYear()
     {
         return $this->belongsTo(SchoolYear::class);
     }
 
-    public function Student()
+    public function student()
     {
-        return $this->hasMany(Student::class);
+        return $this->belongsTo(Student::class);
     }
 
-    public function Company()
+    public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function SchoolAdvisor()
+    public function schoolAdvisor()
     {
         return $this->belongsTo(SchoolAdvisor::class);
     }
 
-    public function CompanyAdvisor()
+    public function companyAdvisor()
     {
         return $this->belongsTo(CompanyAdvisor::class);
     }

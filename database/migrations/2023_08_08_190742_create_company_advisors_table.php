@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('phone', 255);
             $table->string('gender');
+            $table->text('address');
             $table->unsignedInteger('user_id')->nullable();
             $table->string('password_hint', 255)->nullable();
             $table->boolean('is_active')->default(true);

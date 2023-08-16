@@ -19,7 +19,7 @@ class Classroom extends Model
     /**
      * Get all of the comments for the Classroom
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function schoolYear(): BelongsTo
     {
