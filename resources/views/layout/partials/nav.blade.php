@@ -59,12 +59,6 @@
                         'childs' => [],
                     ],
                     (object) [
-                        'name' => 'Siswa',
-                        'icon' => 'la la-graduation-cap',
-                        'link' => 'students',
-                        'childs' => [],
-                    ],
-                    (object) [
                         'name' => 'Pembimbing Perusahaan',
                         'icon' => 'la la-user-tie',
                         'link' => 'company-advisors',
