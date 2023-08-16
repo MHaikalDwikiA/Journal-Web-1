@@ -19,10 +19,9 @@ class Classroom extends Model
     /**
      * Get all of the comments for the Classroom
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function schoolYear(): BelongsTo
     {
-        return $this->belongsTo(SchoolYear::class);
+        return $this->belongsTo(SchoolYear::class, 'school_year_id', 'id');
     }
 }

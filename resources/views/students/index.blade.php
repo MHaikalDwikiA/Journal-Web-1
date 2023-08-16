@@ -13,7 +13,7 @@
             Daftar
         @endslot
         @slot('action_button')
-            <a href="{{ route('students.create') }}" class="btn add-btn">
+            <a href="{{ route('classrooms.studentCreate', $classroomId) }}" class="btn add-btn">
                 <i class="fa fa-plus"></i> Tambah Siswa Baru
             </a>
         @endslot
@@ -27,8 +27,6 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ImportSiswaModal">
                     Import Data Siswa
                 </button>
-                <a href="{{ asset('files/Insert-Siswa.xlsx') }}" class="btn btn-primary">Unduh
-                    Template Excel</a>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -39,6 +37,7 @@
                                     <th width="10%">No</th>
                                     <th>NIS</th>
                                     <th>Nama</th>
+                                    <th>No Telepon</th>
                                     <th>Username</th>
                                     <th>Password</th>
                                     <th width="10%">Aksi</th>
@@ -50,17 +49,18 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $student->identity }}</td>
                                         <td>{{ $student->name }}</td>
+                                        <td>{{ $student->phone }}</td>
                                         <td>{{ $student->user->username }}</td>
                                         <td>{{ $student->password_hint }}</td>
                                         <td class="text-end">
-                                            <a href="{{ route('students.edit', $student->id) }}"
+                                            <a href="{{ route('classrooms.studentEdit', ['classroomId' => $classroomId, 'studentId' => $student->id]) }}"
                                                 class="btn btn-sm btn-success">Edit</a>
                                             <form class="d-inline" action="{{ route('students.remove', $student->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button"
-                                                    data-action="{{ route('students.remove', $student->id) }}"
+                                                    data-action="{{ route('classrooms.studentRemove', ['classroomId' => $classroomId, 'studentId' => $student->id]) }}"
                                                     data-confirm-text="Anda yakin menghapus siswa ini?"
                                                     class="btn btn-danger btn-sm btn-delete btn-sm">Hapus</button>
                                             </form>
@@ -71,6 +71,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div>
+                <a href="{{ route('classrooms.index') }}" class="btn btn-sm btn-primary">Kembali ke Kelas</a>
             </div>
         </div>
     </div>
@@ -83,7 +86,7 @@
                     <h5 class="modal-title" id="ImportSiswaModalLabel">Import Data Siswa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('students.import') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('students.import', $classroomId) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -100,4 +103,15 @@
             </div>
         </div>
     </div>
+@endpush
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('select[name="classrooms"]').change(function() {
+                var selectedClassroom = $(this).val();
+                var Filter = "{{ route('students.index') }}" + "?classrooms=" + selectedClassroom;
+                $('#btn-filter').attr('href', Filter);
+            });
+        });
+    </script>
 @endpush

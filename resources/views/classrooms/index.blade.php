@@ -28,11 +28,8 @@
                     <div class="col-sm-2">
                         <div class="form-group form-focus select-focus">
                             <select name="year" class="form-control">
-                                @php
-                                    $allYears = $schoolYears;
-                                @endphp
                                 <option value="all" {{ request('year') === 'all' ? 'selected' : '' }}>Semua</option>
-                                @foreach ($allYears as $year)
+                                @foreach ($schoolYears as $year)
                                     @if ($year->is_active)
                                         <option value="{{ $year->id }}"
                                             {{ request('year') == $year->id ? 'selected' : '' }}>
@@ -46,15 +43,6 @@
                                     @endif
                                 @endforeach
                             </select>
-                            <script>
-                                $(document).ready(function() {
-                                    $('select[name="year"]').change(function() {
-                                        var selectedYear = $(this).val();
-                                        var Filter = "{{ route('classrooms.index') }}" + "?year=" + selectedYear;
-                                        $('#btn-filter').attr('href', Filter);
-                                    });
-                                });
-                            </script>
                             <label class="focus-label">Tahun</label>
                         </div>
                     </div>
@@ -70,7 +58,9 @@
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
-                                    <th>Nama Kelas</th>
+                                    <th>Kelas</th>
+                                    <th>Program Keahlian</th>
+                                    <th>Program Kompetensi</th>
                                     <th width="10%">Aksi</th>
                                 </tr>
                             </thead>
@@ -79,7 +69,11 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $classroom->name }}</td>
+                                        <td>{{ $classroom->vocational_program }}</td>
+                                        <td>{{ $classroom->vocational_competency }}</td>
                                         <td class="text-end">
+                                            <a href="{{ route('classrooms.studentIndex', $classroom->id) }}"
+                                                class="btn btn-sm btn-primary">Lihat Siswa</a>
                                             <a href="{{ route('classrooms.edit', $classroom->id) }}"
                                                 class="btn btn-sm btn-success">Edit</a>
                                             <button type="button"
@@ -99,3 +93,14 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('select[name="year"]').change(function() {
+                var selectedYear = $(this).val();
+                var Filter = "{{ route('classrooms.index') }}" + "?year=" + selectedYear;
+                $('#btn-filter').attr('href', Filter);
+            });
+        });
+    </script>
+@endpush

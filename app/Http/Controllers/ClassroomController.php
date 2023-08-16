@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\SchoolYear;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
@@ -90,5 +91,45 @@ class ClassroomController extends Controller
 
         return redirect()->route('classrooms.index')
             ->with('success', 'Kelas Berhasil Dihapus.');
+    }
+    public function studentIndex($id)
+    {
+        $classrooms = Classroom::all();
+        $availableSchoolYears = SchoolYear::all();
+        $students = Student::where('classroom_id', $id)->get();
+        $classroom = Classroom::find($id);
+        $classroomId = $classroom->id;
+
+        return view('students.index', compact('students', 'classroomId', 'availableSchoolYears', 'classrooms'));
+    }
+
+    public function studentCreate($id)
+    {
+        $classrooms = Classroom::all();
+        $schoolYears = SchoolYear::all();
+        $classroom = Classroom::find($id);
+        $classroomId = $classroom->id;
+        return view('students.create', compact('schoolYears', 'classroomId', 'classrooms'));
+    }
+
+    public function studentEdit($classroomId, $studentId)
+    {
+        $classrooms = Classroom::all();
+        $classroom = Classroom::find($classroomId);
+        $student = Student::find($studentId);
+        $schoolYears = SchoolYear::all();
+        abort_if(!$student, 400, 'Siswa tidak ditemukan');
+
+        return view('students.edit', ['classroomId' => $classroom->id, 'studentId' => $student->id, 'student' => $student, 'classroom' => $classroom, 'schoolYears' => $schoolYears, 'classrooms' => $classrooms]);
+    }
+
+    public function studentRemove($classroomId, $studentId)
+    {
+        $classroom = Classroom::find($classroomId);
+        $student = Student::find($studentId);
+
+        $student->delete();
+
+        return redirect()->route('classrooms.studentIndex', $classroom->id);
     }
 }

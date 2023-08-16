@@ -12,11 +12,6 @@
         @slot('li_2')
             Form Edit Kelas Baru
         @endslot
-        @slot('action_button')
-            <a href="{{ route('classrooms.create') }}" class="btn add-btn">
-                <i class="fa fa-plus"></i> Tambah Tahun Pelajaran Baru
-            </a>
-        @endslot
     @endcomponent
 
     <x-alert />
@@ -42,26 +37,44 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nama Kelas<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">Tingkat Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input name="name" class="form-control" type="text"
-                                    value="{{ old('name', $classroom->name) }}">
+                                <select name="name" class="select select2-hidden-accessible">
+                                    @foreach (['XI', 'XII'] as $kelas)
+                                        <option value="{{ $kelas }}"
+                                            @if (old('name', $classroom->name) === $kelas) selected @endif>
+                                            {{ $kelas }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Program Keahlian<span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input name="vocational_program" class="form-control" type="text"
+                                <input type="text" name="vocational_program"
+                                    class="form-control @error('vocational_program') is-invalid @enderror"
                                     value="{{ old('vocational_program', $classroom->vocational_program) }}">
+                                <div class="invalid-feedback">
+                                    @error('vocational_program')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Program Kompetensi<span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input name="vocational_competency" class="form-control" type="text"
+                                <input type="text" name="vocational_competency"
+                                    class="form-control @error('vocational_competency') is-invalid @enderror"
                                     value="{{ old('vocational_competency', $classroom->vocational_competency) }}">
+                                <div class="invalid-feedback">
+                                    @error('vocational_competency')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer text-end">

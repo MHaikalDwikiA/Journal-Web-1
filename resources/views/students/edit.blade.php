@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <div class="card">
-                <form method="POST" action="{{ route('students.update', $student->id) }}">
+                <form method="POST" action="{{ route('students.update', [$student, $classroomId]) }}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -69,6 +69,19 @@
                             </div>
                             <div class="invalid-feedback">
                                 @error('name')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">No Telepon<span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" name="phone"
+                                    class="form-control @error('phone') is-invalid @enderror"
+                                    value="{{ old('phone', $student->phone) }}">
+                            </div>
+                            <div class="invalid-feedback">
+                                @error('phone')
                                     {{ $message }}
                                 @enderror
                             </div>

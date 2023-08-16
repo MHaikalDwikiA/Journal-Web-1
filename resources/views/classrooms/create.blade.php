@@ -36,11 +36,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nama Kelas<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">Tingkat Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="name"
-                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror"
-                                    value="{{ old('name') }}">
+                                <select name="name"
+                                    class="select select2-hidden-accessible  @error('name') is-invalid @enderror">
+                                    <option selected disabled>Pilih Kelas Kalian</option>
+                                    <option {{ old('name') == 'XI' ? 'selected' : '' }}>XI</option>
+                                    <option {{ old('name') == 'XII' ? 'selected' : '' }}>XII</option>
+                                </select>
                                 <div class="invalid-feedback">
                                     @error('name')
                                         {{ $message }}

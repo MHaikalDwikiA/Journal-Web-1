@@ -19,38 +19,9 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <div class="card">
-                <form method="POST" action="{{ route('students.store') }}">
+                <form method="POST" action="{{ route('students.store', $classroomId) }}">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Tahun Pelajaran<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="school_year_id" class="select select2-hidden-accessible">
-                                    @foreach ($schoolYears as $year)
-                                        <option value="{{ $year->id }}">{{ $year->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Kelas<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="classroom_id"
-                                    class="select select2-hidden-accessible @error('classroom_id') is-invalid @enderror"
-                                    value="{{ old('classroom_id') }}">
-                                    <option selected disabled>Pilih Kelas Kalian</option>
-                                    @foreach ($classrooms as $classroom)
-                                        <option value="{{ $classroom->id }}">{{ $classroom->name }}
-                                            {{ $classroom->vocational_program }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    @error('classroom_id')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">NIS<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
@@ -71,6 +42,18 @@
                                     class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                                 <div class="invalid-feedback">
                                     @error('name')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">No Telepon <span class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <input type="text" name="phone"
+                                    class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
+                                <div class="invalid-feedback">
+                                    @error('phone')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -99,7 +82,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-end">
-                        <a class="btn btn-secondary" href="{{ route('students.index') }}">Kembali</a>
+                        <a class="btn btn-secondary" href="{{ route('classrooms.studentIndex', $classroomId) }}">Kembali</a>
                         <button class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
@@ -138,6 +121,3 @@
         });
     </script>
 @endpush
-
-
-
