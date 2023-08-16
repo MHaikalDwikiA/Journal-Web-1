@@ -77,12 +77,6 @@
                         'childs' => [],
                     ],
                     (object) [
-                        'name' => 'Notifikasi',
-                        'icon' => 'la la-bell',
-                        'link' => 'notifications',
-                        'childs' => [],
-                    ],
-                    (object) [
                         'title' => 'Akun',
                     ],
                     (object) [
