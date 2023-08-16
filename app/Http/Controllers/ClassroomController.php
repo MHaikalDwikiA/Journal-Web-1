@@ -13,12 +13,16 @@ class ClassroomController extends Controller
     {
         $schoolYears = SchoolYear::all();
         $classrooms = Classroom::query();
-        if ($request->has('year') && $request->year !== 'all') {
+        $defaultYearId = SchoolYear::where('is_active', true)->value('id');
+        if ($request->has('year')) {
             $classrooms->where('school_year_id', $request->year);
+        } else {
+            $classrooms->where('school_year_id', $defaultYearId);
         }
         $classrooms = $classrooms->get();
-        return view('classrooms.index', compact('classrooms', 'schoolYears'));
+        return view('classrooms.index', compact('classrooms', 'schoolYears', 'defaultYearId'));
     }
+
 
     public function create()
     {
@@ -47,14 +51,19 @@ class ClassroomController extends Controller
             ->with('success', 'Kelas Berhasil Dibuat.');
     }
 
-    public function edit(Classroom $classroom, $id)
+    public function edit($id)
     {
 
         $schoolYears = SchoolYear::all();
+        $vocationalCompetencies = [
+            'Teknik Listrik', 'Desain Permodelan dan Informasi Bangunan', 'Rekayasa Perangkat Lunak',
+            'Teknik Komputer dan Jaringan', 'Teknik Otomotif', 'Teknik Pemesinan', 'Teknik Elektronika Industri'
+        ];
+        $vocationalPrograms = [];
         $classroom = Classroom::find($id);
         abort_if(!$classroom, 400, 'Kelas tidak ditemukan');
 
-        return view('classrooms.edit', compact('classroom', 'schoolYears'));
+        return view('classrooms.edit', compact('classroom', 'schoolYears', 'vocationalCompetencies', 'vocationalPrograms'));
     }
 
     public function update(Request $request, Classroom $classroom, $id)

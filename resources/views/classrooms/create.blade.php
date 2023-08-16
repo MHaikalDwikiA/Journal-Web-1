@@ -36,14 +36,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Tingkat Kelas<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">Nama Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select name="name"
-                                    class="select select2-hidden-accessible  @error('name') is-invalid @enderror">
-                                    <option selected disabled>Pilih Kelas Kalian</option>
-                                    <option {{ old('name') == 'XI' ? 'selected' : '' }}>XI</option>
-                                    <option {{ old('name') == 'XII' ? 'selected' : '' }}>XII</option>
-                                </select>
+                                <input type="text" name="name"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Controh : XII RPL 1">
                                 <div class="invalid-feedback">
                                     @error('name')
                                         {{ $message }}
@@ -55,25 +52,34 @@
                             <label class="col-lg-3 col-form-label">Program Keahlian<span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="vocational_program"
-                                    class="form-control @error('vocational_program') is-invalid @enderror"
-                                    value="{{ old('vocational_program') }}">
+                                <select name="vocational_competency" id="vocational_competency"
+                                    class="select select2-hidden-accessible @error('vocational_competency') is-invalid @enderror">
+                                    <option selected>Pilih Program Keahlian</option>
+                                    <option value="Teknik Listrik">Teknik Listrik</option>
+                                    <option value="Desain Permodelan dan Informasi Bangunan">Desain Permodelan dan Informasi
+                                        Bangunan</option>
+                                    <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+                                    <option value="Teknik Komputer dan Jaringan">Teknik Komputer dan Jaringan </option>
+                                    <option value="Teknik Otomotif">Teknik Otomotif </option>
+                                    <option value="Teknik Pemesinan">Teknik Pemesinan </option>
+                                    <option value="Teknik Elektronika Industri">Teknik Elektronika Industri </option>
+                                </select>
                                 <div class="invalid-feedback">
-                                    @error('vocational_program')
+                                    @error('vocational_competency')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row hide-input" id="vocationalProgramContainer" style="display: none;">
                             <label class="col-lg-3 col-form-label">Program Kompetensi<span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="vocational_competency"
-                                    class="form-control @error('vocational_competency') is-invalid @enderror"
-                                    value="{{ old('vocational_competency') }}">
+                                <select name="vocational_program" id="vocational_program"
+                                    class="select select2-hidden-accessible @error('vocational_program') is-invalid @enderror">
+                                </select>
                                 <div class="invalid-feedback">
-                                    @error('vocational_competency')
+                                    @error('vocational_program')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -86,3 +92,39 @@
                 </form>
             </div>
         @endsection
+        @push('scripts')
+            <script>
+                $(document).ready(function() {
+                    const dataMapping = {
+                        "Teknik Listrik": ["Teknik Instalasi Tenaga Listrik", "Teknik Pendingin dan Tata Udara",
+                            "Teknik Otomasi Industri"
+                        ],
+                        "Desain Permodelan dan Informasi Bangunan": ["Desain Permodelan dan Informasi Bangunan"],
+                        "Rekayasa Perangkat Lunak": ["Pengembangan Perangkat Lunak dan Gim"],
+                        "Teknik Komputer dan Jaringan": ["Teknik Komputer Jaringan dan Teknologi"],
+                        "Teknik Otomotif": ["Teknik Kendaraan Ringan", "Teknik Body Otomotif"],
+                        "Teknik Pemesinan": ["Teknik Pemesinan"],
+                        "Teknik Elektronika Industri": ["Teknik Elektronika Industri"],
+                    };
+                    const vocationalProgramDropdown = $("#vocational_program");
+                    const vocationalProgramContainer = $("#vocationalProgramContainer");
+                    $("#vocational_competency").change(function() {
+                        const selectedvocational_competency = $(this).val();
+                        vocationalProgramDropdown.empty();
+                        if (dataMapping.hasOwnProperty(selectedvocational_competency)) {
+                            const programOptions = dataMapping[selectedvocational_competency];
+                            $.each(programOptions, function(index, value) {
+                                vocationalProgramDropdown.append($('<option>', {
+                                    value: value,
+                                    text: value
+                                }));
+                            });
+                            vocationalProgramContainer.show();
+                        } else {
+                            vocationalProgramContainer.hide();
+                        }
+                    });
+                    $("#vocational_competency").trigger("change");
+                });
+            </script>
+        @endpush

@@ -28,19 +28,11 @@
                     <div class="col-sm-2">
                         <div class="form-group form-focus select-focus">
                             <select name="year" class="form-control">
-                                <option value="all" {{ request('year') === 'all' ? 'selected' : '' }}>Semua</option>
                                 @foreach ($schoolYears as $year)
-                                    @if ($year->is_active)
-                                        <option value="{{ $year->id }}"
-                                            {{ request('year') == $year->id ? 'selected' : '' }}>
-                                            {{ $year->name }}
-                                        </option>
-                                    @else
-                                        <option value="{{ $year->id }}"
-                                            {{ request('year') == $year->id ? 'selected' : '' }}>
-                                            {{ $year->name }} (Non-Aktif)
-                                        </option>
-                                    @endif
+                                    <option value="{{ $year->id }}"
+                                        {{ request('year', $defaultYearId) == $year->id ? 'selected' : '' }}>
+                                        {{ $year->name }} {{ $year->is_active ? '' : '(Non-Aktif)' }}
+                                    </option>
                                 @endforeach
                             </select>
                             <label class="focus-label">Tahun</label>

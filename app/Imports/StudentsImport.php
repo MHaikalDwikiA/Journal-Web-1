@@ -35,6 +35,14 @@ class StudentsImport implements ToCollection, WithHeadingRow
                     throw new Exception('NIS tidak ada');
                 }
 
+                if (!isset($row['nama'])) {
+                    throw new Exception('Nama tidak ada');
+                }
+
+                if (!isset($row['phone'])) {
+                    throw new Exception('No Telepon tidak ada');
+                }
+
                 $existUser = User::where('username', $row['username'])->first();
 
                 if ($existUser) {
@@ -54,6 +62,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
                     'classroom_id' => $this->classroom->id,
                     'identity' => $row['nis'],
                     'name' => $row['nama'],
+                    'phone' => $row['phone'],
                     'user_id' => $user->id,
                     'password_hint' => $row['password'],
                 ]);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Middleware\Authenticate;
 
@@ -9,6 +10,7 @@ use App\Http\Controllers\CompanyAdvisorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolAdvisorController;
 use App\Http\Controllers\SchoolController;
@@ -121,5 +123,25 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
+    });
+
+    Route::controller(InternshipController::class)->prefix('internships')->name('internships.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        // Route::get('/create', 'create')->name('create');
+        Route::get('/{id}', 'show')->name('show');
+        // Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        // Route::put('/{id}', 'update')->name('update');
+        // Route::delete('/{id}', 'remove')->name('remove');
+    });
+
+    Route::controller(AnnouncementController::class)->prefix('announcements')->name('announcements.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}/detail', 'show')->name('show');
+        Route::get('/{id}', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
     });
 });

@@ -71,6 +71,18 @@
                         'childs' => [],
                     ],
                     (object) [
+                        'name' => 'Pengumuman',
+                        'icon' => 'la la-bullhorn',
+                        'link' => 'announcements',
+                        'childs' => [],
+                    ],
+                    (object) [
+                        'name' => 'Daftar PKL',
+                        'icon' => 'la la-book',
+                        'link' => 'internships',
+                        'childs' => [],
+                    ],
+                    (object) [
                         'title' => 'Akun',
                     ],
                     (object) [

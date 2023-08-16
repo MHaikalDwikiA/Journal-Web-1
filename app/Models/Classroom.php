@@ -19,6 +19,7 @@ class Classroom extends Model
     /**
      * Get all of the comments for the Classroom
      *
+     * @return
      */
     public function schoolYear(): BelongsTo
     {

@@ -1,20 +1,20 @@
-@section('title', 'Siswa')
+@section('title', 'Kelas')
 
 @extends('layout.mainlayout')
 @section('content')
     @component('components.breadcrumb')
         @slot('title')
-            Siswa
+            Daftar Kelas
         @endslot
         @slot('li_1')
-            Siswa
+            Kelas
         @endslot
         @slot('li_2')
             Daftar
         @endslot
         @slot('action_button')
-            <a href="{{ route('classrooms.studentCreate', $classroomId) }}" class="btn add-btn">
-                <i class="fa fa-plus"></i> Tambah Siswa Baru
+            <a href="{{ route('classrooms.create') }}" class="btn add-btn">
+                <i class="fa fa-plus"></i> Tambah Kelas Baru
             </a>
         @endslot
     @endcomponent
@@ -23,47 +23,57 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="mb-2">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ImportSiswaModal">
-                    Import Data Siswa
-                </button>
-            </div>
+            <form method="get">
+                <div class="row filter-row">
+                    <div class="col-sm-2">
+                        <div class="form-group form-focus select-focus">
+                            <select name="year" class="form-control">
+                                @foreach ($schoolYears as $year)
+                                    <option value="{{ $year->id }}"
+                                        {{ request('year', $defaultYearId) == $year->id ? 'selected' : '' }}>
+                                        {{ $year->name }} {{ $year->is_active ? '' : '(Non-Aktif)' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label class="focus-label">Tahun</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" id="btn-filter" class="btn btn-primary w-100">Filter</button>
+                    </div>
+                </div>
+            </form>
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="tab-content table-responsive">
                         <table class="table table-striped custom-table no-footer mb-0 datatable">
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
-                                    <th>NIS</th>
-                                    <th>Nama</th>
-                                    <th>No Telepon</th>
-                                    <th>Username</th>
-                                    <th>Password</th>
+                                    <th>Kelas</th>
+                                    <th>Program Keahlian</th>
+                                    <th>Program Kompetensi</th>
                                     <th width="10%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($students as $student)
+                                @foreach ($classrooms as $classroom)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $student->identity }}</td>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->phone }}</td>
-                                        <td>{{ $student->user->username }}</td>
-                                        <td>{{ $student->password_hint }}</td>
+                                        <td>{{ $classroom->name }}</td>
+                                        <td>{{ $classroom->vocational_program }}</td>
+                                        <td>{{ $classroom->vocational_competency }}</td>
                                         <td class="text-end">
-                                            <a href="{{ route('classrooms.studentEdit', ['classroomId' => $classroomId, 'studentId' => $student->id]) }}"
+                                            <a href="{{ route('classrooms.studentIndex', $classroom->id) }}"
+                                                class="btn btn-sm btn-primary">Lihat Siswa</a>
+                                            <a href="{{ route('classrooms.edit', $classroom->id) }}"
                                                 class="btn btn-sm btn-success">Edit</a>
-                                            <form class="d-inline" action="{{ route('students.remove', $student->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button"
-                                                    data-action="{{ route('classrooms.studentRemove', ['classroomId' => $classroomId, 'studentId' => $student->id]) }}"
-                                                    data-confirm-text="Anda yakin menghapus siswa ini?"
-                                                    class="btn btn-danger btn-sm btn-delete btn-sm">Hapus</button>
-                                            </form>
+                                            <button type="button"
+                                                data-action="{{ route('classrooms.remove', $classroom->id) }}"
+                                                data-confirm-text="Anda yakin menghapus kelas ini?"
+                                                class="btn btn-danger btn-sm btn-delete btn-sm">
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -72,44 +82,15 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <a href="{{ route('classrooms.index') }}" class="btn btn-sm btn-primary">Kembali ke Kelas</a>
-            </div>
         </div>
     </div>
 @endsection
-@push('after-body')
-    <div class="modal fade" id="ImportSiswaModal" tabindex="-1" aria-labelledby="ImportSiswaModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ImportSiswaModalLabel">Import Data Siswa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('students.import', $classroomId) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="formFileSm" class="form-label">Pilih File</label>
-                            <input class="form-control form-control-sm" id="formFileSm" type="file" name="import_file"
-                                accept=".xls,.xlsx">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Import</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-@endpush
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('select[name="classrooms"]').change(function() {
-                var selectedClassroom = $(this).val();
-                var Filter = "{{ route('students.index') }}" + "?classrooms=" + selectedClassroom;
+            $('select[name="year"]').change(function() {
+                var selectedYear = $(this).val();
+                var Filter = "{{ route('classrooms.index') }}" + "?year=" + selectedYear;
                 $('#btn-filter').attr('href', Filter);
             });
         });

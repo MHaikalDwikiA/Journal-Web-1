@@ -12,7 +12,7 @@ class CreateClassroomsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('school_year_id');
             $table->string('name');
-            $table->string('vocational_program')->unique();
+            $table->string('vocational_program');
             $table->string('vocational_competency');
             $table->timestamps();
 

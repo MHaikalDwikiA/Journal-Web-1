@@ -1,16 +1,16 @@
-@section('title', 'Siswa')
+@section('title', 'Kelas')
 
 @extends('layout.mainlayout')
 @section('content')
     @component('components.breadcrumb')
         @slot('title')
-            Siswa
+            Kelas
         @endslot
         @slot('li_1')
-            Siswa
+            Kelas
         @endslot
         @slot('li_2')
-            Form Tambah Siswa Baru
+            Form Edit Kelas Baru
         @endslot
     @endcomponent
 
@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <div class="card">
-                <form method="POST" action="{{ route('students.update', [$student, $classroomId]) }}">
+                <form method="POST" action="{{ route('classrooms.update', $classroom->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -29,89 +29,72 @@
                                 <select name="school_year_id" class="select select2-hidden-accessible">
                                     @foreach ($schoolYears as $year)
                                         <option
-                                            value="{{ $year->id }}"{{ old('school_year_id', $student->school_year_id) == $year->id ? ' selected' : '' }}>
-                                            {{ $year->name }}</option>
+                                            value="{{ $year->id }}"{{ old('school_year_id', $classroom->school_year_id) == $year->id ? ' selected' : '' }}>
+                                            {{ $year->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Kelas<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <select name="classroom_id" class="select select2-hidden-accessible">
-                                    @foreach ($classrooms as $classroom)
-                                        <option
-                                            value="{{ $classroom->id }}"{{ old('classroom_id', $student->classroom_id) == $classroom->id ? ' selected' : '' }}>
-                                            {{ $classroom->name }} {{ $classroom->vocational_program }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">NIS<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <input type="text" name="identity"
-                                    class="form-control @error('identity') is-invalid @enderror"
-                                    value="{{ old('identity', $student->identity) }}">
-                                <div class="invalid-feedback">
-                                    @error('identity')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nama<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">Nama Kelas<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror"
-                                    value="{{ old('name', $student->name) }}">
-                            </div>
-                            <div class="invalid-feedback">
-                                @error('name')
-                                    {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">No Telepon<span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <input type="text" name="phone"
-                                    class="form-control @error('phone') is-invalid @enderror"
-                                    value="{{ old('phone', $student->phone) }}">
-                            </div>
-                            <div class="invalid-feedback">
-                                @error('phone')
-                                    {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
-                            <div class="col-lg-9">
-                                <div class="input-group">
-                                    <input type="password" name="password_hint"
-                                        class="form-control @error('password_hint') is-invalid @enderror" id="passwordInput"
-                                        value="{{ old('password_hint', $student->password_hint) }}">
-                                    <button class="btn btn-outline-secondary" style="width: 50px" type="button"
-                                        id="togglePassword">
-                                        <span class="fa fa-eye-slash"></span>
-                                    </button>
-                                    <button class="btn btn-outline-secondary" id="generatePassword"
-                                        type="button">Generate</button>
-                                </div>
-                                <div class="invalid-feedback" id="passwordError">
-                                    @error('password_hint')
+                                    value="{{ old('name', $classroom->name) }}">
+                                <div class="invalid-feedback">
+                                    @error('name')
                                         {{ $message }}
                                     @enderror
                                 </div>
-                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer text-end">
-                        <a class="btn btn-secondary" href="{{ route('students.index') }}">Kembali</a>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Program Keahlian<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <select name="vocational_competency" id="vocational_competency"
+                                    class="select select2-hidden-accessible @error('vocational_competency') is-invalid @enderror">
+                                    <option value="" disabled selected>Pilih Program Keahlian</option>
+                                    @foreach ($vocationalCompetencies as $competency)
+                                        <option value="{{ $competency }}"
+                                            {{ old('vocational_competency', $classroom->vocational_competency) == $competency ? 'selected' : '' }}>
+                                            {{ $competency }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    @error('vocational_competency')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row hide-input" id="vocationalProgramContainer"
+                            style="{{ old('vocational_competency', $classroom->vocational_competency) ? '' : 'display: none;' }}">
+                            <label class="col-lg-3 col-form-label">Program Kompetensi<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-lg-9">
+                                <select name="vocational_program" id="vocational_program"
+                                    class="select select2-hidden-accessible @error('vocational_program') is-invalid @enderror">
+                                    @foreach ($vocationalPrograms as $program)
+                                        <option value="{{ $program }}"
+                                            {{ old('vocational_program', $classroom->vocational_program) == $program ? 'selected' : '' }}>
+                                            {{ $program }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    @error('vocational_program')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a class="btn btn-secondary" href="{{ route('classrooms.index') }}">Kembali</a>
+                            <button class="btn btn-primary">Simpan</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -119,33 +102,39 @@
     </div>
 @endsection
 @push('scripts')
-    <script>
-        const passwordInput = document.getElementById('passwordInput');
-        const toggleButton = document.getElementById('togglePassword');
-        const passwordError = document.getElementById('passwordError');
-        const generateButton = document.getElementById('generatePassword');
-
-        toggleButton.addEventListener('click', function() {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleButton.innerHTML = '<span class="fa fa-eye"></span>';
-            } else {
-                passwordInput.type = 'password';
-                toggleButton.innerHTML = '<span class="fa fa-eye-slash"></span>';
-            }
-        });
-
-        generateButton.addEventListener("click", function() {
-            const length = 5;
-            const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            let password = "";
-
-            for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * charset.length);
-                password += charset[randomIndex];
-            }
-
-            passwordInput.value = password;
-        });
-    </script>
-@endpush
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                const dataMapping = {
+                    "Teknik Listrik": ["Teknik Instalasi Tenaga Listrik", "Teknik Pendingin dan Tata Udara",
+                        "Teknik Otomasi Industri"
+                    ],
+                    "Desain Permodelan dan Informasi Bangunan": ["Desain Permodelan dan Informasi Bangunan"],
+                    "Rekayasa Perangkat Lunak": ["Pengembangan Perangkat Lunak dan Gim"],
+                    "Teknik Komputer dan Jaringan": ["Teknik Komputer Jaringan dan Teknologi"],
+                    "Teknik Otomotif": ["Teknik Kendaraan Ringan", "Teknik Body Otomotif"],
+                    "Teknik Pemesinan": ["Teknik Pemesinan"],
+                    "Teknik Elektronika Industri": ["Teknik Elektronika Industri"],
+                };
+                const vocationalProgramDropdown = $("#vocational_program");
+                const vocationalProgramContainer = $("#vocationalProgramContainer");
+                $("#vocational_competency").change(function() {
+                    const selectedvocational_competency = $(this).val();
+                    vocationalProgramDropdown.empty();
+                    if (dataMapping.hasOwnProperty(selectedvocational_competency)) {
+                        const programOptions = dataMapping[selectedvocational_competency];
+                        $.each(programOptions, function(index, value) {
+                            vocationalProgramDropdown.append($('<option>', {
+                                value: value,
+                                text: value
+                            }));
+                        });
+                        vocationalProgramContainer.show();
+                    } else {
+                        vocationalProgramContainer.hide();
+                    }
+                });
+                $("#vocational_competency").trigger("change");
+            });
+        </script>
+    @endpush
