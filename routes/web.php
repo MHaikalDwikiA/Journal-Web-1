@@ -6,15 +6,14 @@ use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CompanyAdvisorController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SchoolAdvisorController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SchoolAdvisorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +56,8 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
+        Route::put('school-years/{id}/activate', 'activate')->name('activate');
+        Route::put('school-years/{id}/deactivate', 'deactivate')->name('deactivate');
     });
 
     Route::controller(ClassroomController::class)->prefix('classrooms')->name('classrooms.')->group(function () {
@@ -66,16 +67,11 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
-    });
 
-    Route::controller(StudentController::class)->prefix('students')->name('students.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::get('/{id}/edit', 'edit')->name('edit');
-        Route::post('/', 'store')->name('store');
-        Route::put('/{id}', 'update')->name('update');
-        Route::delete('/{id}', 'remove')->name('remove');
-        Route::post('/import', 'import')->name('import');
+        Route::get('/{id}/students', 'studentIndex')->name('studentIndex');
+        Route::get('/{id}/students/create', 'studentCreate')->name('studentCreate');
+        Route::get('/{classroomId}/student/{studentId}', 'studentEdit')->name('studentEdit');
+        Route::delete('/{classroomId}/student/{studentId}', 'studentRemove')->name('studentRemove');
     });
 
     Route::controller(CompanyAdvisorController::class)->prefix('company-advisors')->name('company-advisors.')->group(function () {
@@ -87,29 +83,9 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::delete('/{id}', 'remove')->name('remove');
     });
 
-    Route::controller(SchoolAdvisorController::class)->prefix('school-advisors')->name('school-advisors.')->group(function () {
+    Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::get('/{id}/edit', 'edit')->name('edit');
-        Route::post('/', 'store')->name('store');
-        Route::put('/{id}', 'update')->name('update');
-        Route::delete('/{id}', 'remove')->name('remove');
-    });
-
-    Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::get('/{id}', 'show')->name('show');
-        Route::get('/{id}/edit', 'edit')->name('edit');
-        Route::post('/', 'store')->name('store');
-        Route::put('/{id}', 'update')->name('update');
-        Route::delete('/{id}', 'remove')->name('remove');
-    });
-
-    Route::controller(SchoolController::class)->prefix('school')->name('school.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'edit')->name('edit');
-        Route::put('/{id}/update', 'update')->name('update');
+        Route::put('/', 'update')->name('update');
     });
 
     Route::controller(CompanyController::class)->prefix('companies')->name('companies.')->group(function () {
@@ -121,8 +97,29 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::delete('/{id}', 'destroy')->name('destroy');
     });
 
-    Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
+    Route::controller(StudentController::class)->prefix('students')->name('students.')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::put('/', 'update')->name('update');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/{id}', 'store')->name('store');
+        Route::put('/{classroomId}/student/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
+        Route::post('/import/{classroomId}', 'import')->name('import');
+    });
+
+
+    Route::controller(SchoolController::class)->prefix('school')->name('school.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+    });
+
+    Route::controller(SchoolAdvisorController::class)->prefix('school-advisors')->name('school-advisors.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'remove')->name('remove');
     });
 });

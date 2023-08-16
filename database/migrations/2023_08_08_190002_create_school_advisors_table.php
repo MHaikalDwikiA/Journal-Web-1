@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('school_advisors', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('identity');
-            $table->string('name');
-            $table->string('phone');
-            $table->text('address');
-            $table->string('gender');
-            $table->boolean('is_active');
+            $table->string('identity', 255)->unique();
+            $table->string('name', 255);
+            $table->string('phone', 255);
+            $table->string('address', 255);
+            $table->string('gender', 255);
+            $table->boolean('is_active')->default(true);
             $table->unsignedInteger('user_id');
-            $table->string('password_hint');
+            $table->string('password_hint', 255)->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

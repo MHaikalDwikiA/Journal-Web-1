@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schools', function (Blueprint $table) {
+        Schema::create('internship_company_rules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255);
-            $table->string('npsn', 255);
-            $table->string('address', 255);
-            $table->string('kelurahan', 255);
-            $table->string('kecamatan', 255);
+            $table->unsignedInteger('internship_id');
+            $table->tinyInteger('sequence');
+            $table->text('description');
             $table->timestamps();
+
+            $table->foreign('internship_id')->references('id')->on('internships')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schools');
+        Schema::dropIfExists('internship_company_rules');
     }
 };
