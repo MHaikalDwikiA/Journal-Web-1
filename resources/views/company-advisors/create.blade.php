@@ -27,7 +27,7 @@
                             <div class="col-lg-9">
                                 <select name="company_id" class="select select2-hidden-accessible">
                                     @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                        <option value="{{ $company->id }} ">{{ $company->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

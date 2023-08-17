@@ -92,6 +92,82 @@
                                 @endif
                                 </td>
                                 </tr>
+                                @push('after-body')
+                                    <div class="modal fade" id="exampleModal{{ $student->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nama Perusahaan</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('internships.store') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="student_id" value="{{ $student->id }}">
+                                                    <input type="hidden" name="school_year_id"
+                                                        value="{{ $student->school_year_id }}">
+                                                    <input type="hidden" name="company_advisor_id"
+                                                        value="{{ $student->company_advisor_id }}">
+                                                    <input type="hidden" name="school_advisor_id"
+                                                        value="{{ $student->school_advisor_id }}">
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="company_id" class="form-label">Masukan Nama
+                                                                Perusahaan</label>
+                                                            <div>
+                                                                <select name="company_id"
+                                                                    class="select-hidden-accessible form-control">
+                                                                    <option value="" disabled selected>Pilih Perusahaan
+                                                                    </option>
+                                                                    @foreach ($companies as $company)
+                                                                        <option value="{{ $company->id }}">
+                                                                            {{ $company->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="company_advisor_id" class="form-label">Masukan Nama
+                                                                Pembimbing Perusahaan</label>
+                                                            <div>
+                                                                <select name="company_advisor_id"
+                                                                    class="select-hidden-accessible form-control">
+                                                                    <option value="" disabled selected>Pilih Pembimbing
+                                                                        Perusahaan
+                                                                    </option>
+                                                                    @foreach ($companyAdvisors as $advisors)
+                                                                        <option value="{{ $advisors->id }}">
+                                                                            {{ $advisors->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="school_advisor_id" class="form-label">Masukan Nama
+                                                                Pembimbing Sekolah</label>
+                                                            <div>
+                                                                <select name="school_advisor_id"
+                                                                    class="select-hidden-accessible form-control">
+                                                                    <option value="" disabled selected>Pilih Pembimbing
+                                                                        Sekolah
+                                                                    </option>
+                                                                    @foreach ($schoolAdvisors as $advisor)
+                                                                        <option value="{{ $advisor->id }}">
+                                                                            {{ $advisor->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Kirim</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endpush
                                 @endforeach
                             </tbody>
                         </table>
@@ -101,75 +177,6 @@
         </div>
     </div>
 @endsection
-@push('after-body')
-    <div class="modal fade" id="exampleModal{{ $student->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nama Perusahaan</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('internships.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="student_id" value="{{ $student->id }}">
-                    <input type="hidden" name="school_year_id" value="{{ $student->school_year_id }}">
-                    <input type="hidden" name="company_advisor_id" value="{{ $student->company_advisor_id }}">
-                    <input type="hidden" name="school_advisor_id" value="{{ $student->school_advisor_id }}">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="company_id" class="form-label">Masukan Nama
-                                Perusahaan</label>
-                            <div>
-                                <select name="company_id" class="select-hidden-accessible form-control">
-                                    <option value="" disabled selected>Pilih Perusahaan
-                                    </option>
-                                    @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}">
-                                            {{ $company->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="company_advisor_id" class="form-label">Masukan Nama
-                                Pembimbing Perusahaan</label>
-                            <div>
-                                <select name="company_advisor_id" class="select-hidden-accessible form-control">
-                                    <option value="" disabled selected>Pilih Pembimbing
-                                        Perusahaan
-                                    </option>
-                                    @foreach ($companyAdvisors as $advisors)
-                                        <option value="{{ $advisors->id }}">
-                                            {{ $advisors->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="school_advisor_id" class="form-label">Masukan Nama
-                                Pembimbing Sekolah</label>
-                            <div>
-                                <select name="school_advisor_id" class="select-hidden-accessible form-control">
-                                    <option value="" disabled selected>Pilih Pembimbing
-                                        Sekolah
-                                    </option>
-                                    @foreach ($schoolAdvisors as $advisor)
-                                        <option value="{{ $advisor->id }}">
-                                            {{ $advisor->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Kirim</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-@endpush
 @push('scripts')
     <script>
         $(document).ready(function() {

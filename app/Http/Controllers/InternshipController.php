@@ -21,7 +21,7 @@ class InternshipController extends Controller
         $students = Student::when($schoolYearId, function ($query) use ($schoolYearId) {
             $query->where('school_year_id', $schoolYearId);
         })
-            ->when($classroomId, function ($query) use ($classroomId) {
+            ->when($classroomId !== null, function ($query) use ($classroomId) {
                 $query->where('classroom_id', $classroomId);
             })
             ->get();

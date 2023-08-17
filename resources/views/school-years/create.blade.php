@@ -26,11 +26,12 @@
                             <label class="col-lg-3 col-form-label">Tahun Pelajaran <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="name"
-                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror" required>
+                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror">
                                     @php
                                         $currentYear = date('Y');
                                         $yearsRange = range($currentYear, $currentYear + 5);
                                     @endphp
+                                    <option value="" selected disabled>-- Pilih Tahun Pelajaran --</option>
                                     @foreach ($yearsRange as $year)
                                         @php
                                             $nextYear = $year + 1;
@@ -41,12 +42,12 @@
                                             {{ $academicYear }}
                                         </option>
                                     @endforeach
-                                    <div class="invalid-feedback">
-                                        @error('name')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
                                 </select>
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

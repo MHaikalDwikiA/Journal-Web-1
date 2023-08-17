@@ -103,7 +103,8 @@ class StudentController extends Controller
             'name.required' => 'Nama harus diisi',
             'name.max' => 'Nama maksimal 255 karakter',
             'phone.max' => 'Nomer Telepon maksimal 25 karakter',
-            'phone.required' => 'Nomer Telepon harus diisi'
+            'phone.required' => 'Nomer Telepon harus diisi',
+            'password_hint.required' => 'Password harus diisi'
         ]);
 
         $user = $student->user;
