@@ -12,4 +12,8 @@ class SchoolYear extends Model
         'is_active',
     ];
 
+    public function is_active()
+    {
+        return $this->attributes['is_active'] == 1 ? 'Aktif' : 'Tidak Aktif';
+    }
 }

@@ -25,11 +25,21 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Perusahaan<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select name="company_id" class="select select2-hidden-accessible">
+                                <select name="company_id"
+                                    class="select select2-hidden-accessible @error('company_id') is-invalid @enderror">
+                                    <option disabled selected>Pilih Perusahaan</option>
                                     @foreach ($companies as $company)
-                                        <option value="{{ $company->id }} ">{{ $company->name }}</option>
+                                        <option value="{{ $company->id }}"
+                                            {{ old('company_id') == $company->id ? 'selected' : '' }}>
+                                            {{ $company->name }}
+                                        </option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                    @error('company_id')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -83,7 +93,8 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Jenis kelamin <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select name="gender" class="form-control @error('gender') is-invalid @enderror"
+                                <select name="gender"
+                                    class="select select2-hidden-accessible @error('gender') is-invalid @enderror"
                                     id="gender">
                                     <option disabled selected>Pilih Kelamin</option>
                                     <option {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>

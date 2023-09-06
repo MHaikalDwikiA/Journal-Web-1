@@ -89,16 +89,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row mt-3">
-                            <label class="col-lg-3 col-form-label">Status</label>
-                            <div class="col-lg-9">
-                                <select class="form-control" name="is_active">
-                                    <option value="0" @if (old('is_active', $advisor->is_active) == 0) selected @endif>Tidak Aktif
-                                    </option>
-                                    <option value="1" @if (old('is_active', $advisor->is_active) == 1) selected @endif>Aktif</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
@@ -118,6 +108,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row mt-3">
+                            <label class="col-lg-3 col-form-label">Status</label>
+                            <div class="col-lg-9">
+                                <select class="form-control" name="is_active">
+                                    <option value="0" @if (old('is_active', $advisor->is_active) == 0) selected @endif>Tidak Aktif
+                                    </option>
+                                    <option value="1" @if (old('is_active', $advisor->is_active) == 1) selected @endif>Aktif</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-end">
                         <span class="text-muted float-start">
@@ -133,9 +133,7 @@
 @endsection
 @push('scripts')
     <script>
-        const passwordInput = document.getElementById('passwordInput');
         const toggleButton = document.getElementById('togglePassword');
-        const passwordError = document.getElementById('passwordError');
 
         toggleButton.addEventListener('click', function() {
             if (passwordInput.type === 'password') {

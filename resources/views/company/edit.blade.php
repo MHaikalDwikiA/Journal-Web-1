@@ -26,7 +26,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Nama <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="name" maxlength="255" minlength="5"
+                                <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror"
                                     value="{{ old('name', $company->name) }}">
                                 <div class="invalid-feedback">
@@ -51,7 +51,7 @@
                             <label class="col-lg-3 col-form-label">Direktur Perusahaan <span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="director" maxlength="255" minlength="5"
+                                <input type="text" name="director"
                                     class="form-control @error('director') is-invalid @enderror"
                                     value="{{ old('director', $company->director) }}">
                                 <div class="invalid-feedback">

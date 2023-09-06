@@ -46,7 +46,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="tab-content table-responsive">
-                        <table class="table table-striped custom-table no-footer mb-0 datatable">
+                        <table class="table table-striped custom-table no-footer mb-0 datatable" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>

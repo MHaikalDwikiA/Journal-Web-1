@@ -31,7 +31,7 @@
                                         $currentYear = date('Y');
                                         $yearsRange = range($currentYear, $currentYear + 5);
                                     @endphp
-                                    <option value="" selected disabled>-- Pilih Tahun Pelajaran --</option>
+                                    <option value="" selected disabled>Pilih Tahun Pelajaran</option>
                                     @foreach ($yearsRange as $year)
                                         @php
                                             $nextYear = $year + 1;
@@ -76,6 +76,9 @@
                         </div>
                     </div>
                     <div class="card-footer text-end">
+                        <span class="text-muted float-start">
+                            <strong class="text-danger">*</strong> Harus diisi
+                        </span>
                         <a class="btn btn-secondary" href="{{ route('school-years.index') }}">Kembali</a>
                         <button class="btn btn-primary">Simpan</button>
                     </div>
@@ -83,5 +86,4 @@
             </div>
         </div>
     </div>
-
 @endsection

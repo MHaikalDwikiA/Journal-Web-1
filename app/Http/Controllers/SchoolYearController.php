@@ -33,7 +33,7 @@ class SchoolYearController extends Controller
         ],  [
             'name.required' => 'Tahun harus diisi!',
             'name.unique' => 'Tahun telah digunakan!',
-            'headmaster_name.required' => 'headmaster_name harus diisi!',
+            'headmaster_name.required' => 'Nama Kepala Sekolah harus diisi!',
             'headmaster_name.max' => 'Nama Kepala Sekolah tidak boleh lebih dari 255 karakter.',
             'is_active.required' => 'Status harus diisi!',
             'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
@@ -43,7 +43,6 @@ class SchoolYearController extends Controller
 
         try {
             if ($data['is_active']) {
-                // Deactivate all other active SchoolYear records
                 SchoolYear::where('is_active', true)->update(['is_active' => false]);
             }
 
@@ -77,7 +76,7 @@ class SchoolYearController extends Controller
             'is_active' => 'boolean',
         ], [
             'name.required' => 'Tahun harus diisi!',
-            'headmaster_name.required' => 'Nama Kepala Sekolag harus diisi!',
+            'headmaster_name.required' => 'Nama Kepala Sekolah harus diisi!',
             'headmaster_name.max' => 'Nama kepala sekolah tidak boleh lebih dari 255 karakter.',
             'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
         ]);
@@ -107,29 +106,6 @@ class SchoolYearController extends Controller
 
         $schoolYear->delete();
 
-        return redirect()->route('school-years.index')->withSucces('Tahun Pelajaran berhasil dihapus.');
+        return redirect()->route('school-years.index')->withSuccess('Tahun Pelajaran berhasil dihapus.');
     }
-
-    // public function deactivate($id)
-    // {
-    //     $schoolYear = SchoolYear::find($id);
-    //     abort_if(!$schoolYear, 400, 'Tahun Pelajaran tidak ditemukan');
-
-    //     $schoolYear->update(['is_active' => false]);
-
-    //     return redirect()->route('school-years.index')->withSuccess('Tahun Pelajaran berhasil dinonaktifkan.');
-    // }
-
-    // public function activate($id)
-    // {
-    //     $schoolYear = SchoolYear::find($id);
-    //     abort_if(!$schoolYear, 400, 'Tahun Pelajaran tidak ditemukan');
-
-    //     // Deactivate other school years
-    //     SchoolYear::where('id', '<>', $schoolYear->id)->update(['is_active' => false]);
-
-    //     $schoolYear->update(['is_active' => true]);
-
-    //     return redirect()->route('school-years.index')->withSuccess('Tahun Pelajaran berhasil diaktifkan.');
-    // }
 }

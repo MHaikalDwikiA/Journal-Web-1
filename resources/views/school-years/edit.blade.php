@@ -50,11 +50,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nama Kepala Sekolah</label>
+                            <label class="col-lg-3 col-form-label">Nama Kepala Sekolah<span
+                                class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="headmaster_name" maxlength="255" minlength="5"
                                     class="form-control @error('headmaster_name') is-invalid @enderror"
-                                    value="{{ old('headmaster_name', $schoolYear->headmaster_name) }}" required>
+                                    value="{{ old('headmaster_name', $schoolYear->headmaster_name) }}">
                                 <div class="invalid-feedback">
                                     @error('headmaster_name')
                                         {{ $message }}

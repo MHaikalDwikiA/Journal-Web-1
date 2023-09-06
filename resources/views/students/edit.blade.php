@@ -4,13 +4,16 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('title')
-            Siswa
+            Mengubah Siswa
         @endslot
         @slot('li_1')
-            Siswa
+            Siswa {{ $classroom->name }}
         @endslot
         @slot('li_2')
-            Form Edit Siswa Baru
+            Siswa
+        @endslot
+        @slot('li_3')
+            Form Ubah Siswa Baru
         @endslot
     @endcomponent
 
@@ -19,47 +22,47 @@
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
             <div class="card">
-                <form method="POST" action="{{ route('students.update', [$studentId, $classroomId]) }}">
+                <form method="POST" action="{{ route('classrooms.studentUpdate', [$student, $classroomId]) }}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">NIS<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">NIS <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="identity"
                                     class="form-control @error('identity') is-invalid @enderror"
                                     value="{{ old('identity', $student->identity) }}">
-                                @error('identity')
-                                    <div class="invalid-feedback">
+                                <div class="invalid-feedback">
+                                    @error('identity')
                                         {{ $message }}
-                                    </div>
-                                @enderror
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Nama<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">Nama <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror"
                                     value="{{ old('name', $student->name) }}">
-                                @error('name')
-                                    <div class="invalid-feedback">
+                                <div class="invalid-feedback">
+                                    @error('name')
                                         {{ $message }}
-                                    </div>
-                                @enderror
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">No Telepon<span class="text-danger">*</span></label>
+                            <label class="col-lg-3 col-form-label">No Telepon <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="phone"
                                     class="form-control @error('phone') is-invalid @enderror"
                                     value="{{ old('phone', $student->phone) }}">
-                                @error('phone')
-                                    <div class="invalid-feedback">
+                                <div class="invalid-feedback">
+                                    @error('phone')
                                         {{ $message }}
-                                    </div>
-                                @enderror
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -73,17 +76,18 @@
                                         id="togglePassword">
                                         <span class="fa fa-eye-slash"></span>
                                     </button>
-                                    @error('password_hint')
-                                        <div class="invalid-feedback" id="passwordError">
+                                    <div class="invalid-feedback" id="passwordError">
+                                        @error('password_hint')
                                             {{ $message }}
-                                        </div>
-                                    @enderror
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer text-end">
-                        <a class="btn btn-secondary" href="{{ route('classrooms.studentIndex', $classroomId) }}">Kembali</a>
+                        <a class="btn btn-secondary"
+                            href="{{ route('classrooms.studentIndex', $classroomId) }}">Kembali</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
@@ -93,9 +97,7 @@
 @endsection
 @push('scripts')
     <script>
-        const passwordInput = document.getElementById('passwordInput');
         const toggleButton = document.getElementById('togglePassword');
-        const passwordError = document.getElementById('passwordError');
 
         toggleButton.addEventListener('click', function() {
             if (passwordInput.type === 'password') {

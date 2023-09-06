@@ -44,7 +44,7 @@
                     <div class="tab-content">
                         <div class="tab-pane show active">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table no-footer mb-0 datatable">
+                                <table class="table table-striped custom-table no-footer mb-0 datatable" width="100%">
                                     <thead>
                                         <tr>
                                             <th width="10%">No</th>

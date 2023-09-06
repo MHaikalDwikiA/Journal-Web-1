@@ -105,13 +105,19 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="password_hint"
-                                    class="form-control @error('password_hint') is-invalid @enderror"
-                                    value="{{ old('password_hint', $advisor->password_hint) }}">
-                                <div class="invalid-feedback">
-                                    @error('password_hint')
-                                        {{ $message }}
-                                    @enderror
+                                <div class="input-group">
+                                    <input type="password" name="password_hint"
+                                        class="form-control @error('password_hint') is-invalid @enderror" id="passwordInput"
+                                        value="{{ old('password_hint', $advisor->password_hint) }}">
+                                    <button class="btn btn-outline-secondary" style="width: 50px" type="button"
+                                        id="togglePassword">
+                                        <span class="fa fa-eye-slash"></span>
+                                    </button>
+                                    <div class="invalid-feedback" id="passwordError">
+                                        @error('password_hint')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,3 +144,18 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        const toggleButton = document.getElementById('togglePassword');
+
+        toggleButton.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.innerHTML = '<span class="fa fa-eye"></span>';
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.innerHTML = '<span class="fa fa-eye-slash"></span>';
+            }
+        });
+    </script>
+@endpush

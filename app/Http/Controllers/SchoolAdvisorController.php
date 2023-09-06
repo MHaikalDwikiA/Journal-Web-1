@@ -37,27 +37,32 @@ class SchoolAdvisorController extends Controller
     {
         $request->validate(
             [
-                'identity' => 'required|max:255|unique:school_advisors,identity',
+                'identity' => 'required|max:255|min:5|unique:school_advisors,identity|unique:users,username',
                 'name' => 'required|max:255',
-                'phone' => 'required|max:255',
+                'phone' => 'required|max:25|min:5',
                 'address' => 'required|max:255',
                 'gender' => 'required',
-                'is_active' => 'required',
-                'password_hint' => 'required',
+                'is_active' => 'required|boolean',
+                'password_hint' => 'required|min:5|max:255',
             ],
             [
                 'identity.required' => 'NIP harus diisi!',
                 'identity.max' => 'Maksimal 255 karakter!',
+                'identity.min' => 'Minimal 5 karakter!',
                 'identity.unique' => 'NIP sudah digunakan!',
-                'is_active.required' => 'Status harus diisi!',
                 'name.required' => 'Nama harus diisi!',
                 'name.max' => 'Maksimal 255 karakter!',
                 'phone.required' => 'No HP harus diisi!',
-                'phone.max' => 'Maksimal 255 karakter!',
+                'phone.max' => 'Maksimal 25 karakter!',
+                'phone.min' => 'Minimal 5 karakter!',
                 'address.required' => 'Alamat harus diisi!',
                 'address.max' => 'Maksimal 255 karakter!',
                 'gender.required' => 'Jenis kelamin harus diisi!',
+                'is_active.required' => 'Status harus diisi!',
+                'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
                 'password_hint.required' => 'Password harus diisi!',
+                'password_hint.min' => 'Minimal 5 karaker!',
+                'password_hint.max' => 'Maksimal 255 karakter!'
             ]
         );
         $advisor = new SchoolAdvisor;
@@ -99,26 +104,32 @@ class SchoolAdvisorController extends Controller
 
         $validate = $request->validate(
             [
-                'identity' => 'required|max:255',
+                'identity' => 'required|max:255|min:5',
                 'name' => 'required|max:255',
-                'phone' => 'required|max:255',
+                'phone' => 'required|max:25|min:5',
                 'address' => 'required|max:255',
                 'gender' => 'required',
-                'is_active' => 'required',
-                'password_hint' => 'required',
+                'is_active' => 'required|boolean',
+                'password_hint' => 'required|min:5|max:255',
             ],
             [
                 'identity.required' => 'NIP harus diisi!',
-                'is_active.required' => 'Status harus diisi!',
                 'identity.max' => 'Maksimal 255 karakter!',
+                'identity.min' => 'Minimal 5 karakter!',
+                'identity.unique' => 'NIP sudah digunakan!',
                 'name.required' => 'Nama harus diisi!',
                 'name.max' => 'Maksimal 255 karakter!',
                 'phone.required' => 'No HP harus diisi!',
-                'phone.max' => 'Maksimal 255 karakter!',
+                'phone.max' => 'Maksimal 25 karakter!',
+                'phone.min' => 'Minimal 5 karakter!',
                 'address.required' => 'Alamat harus diisi!',
                 'address.max' => 'Maksimal 255 karakter!',
                 'gender.required' => 'Jenis kelamin harus diisi!',
+                'is_active.required' => 'Status harus diisi!',
+                'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
                 'password_hint.required' => 'Password harus diisi!',
+                'password_hint.min' => 'Minimal 5 karaker!',
+                'password_hint.max' => 'Maksimal 255 karakter!'
             ]
         );
 
@@ -148,6 +159,7 @@ class SchoolAdvisorController extends Controller
         abort_if(!$advisor, 400, 'Pembimbing sekolah tidak ditemukan');
 
         $advisor->delete();
+        $advisor->user->delete();
 
         return redirect()->route('school-advisors.index')->withSuccess('Pembimbing Sekolah berhasil dihapus');
     }

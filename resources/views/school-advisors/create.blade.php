@@ -74,8 +74,11 @@
                             <label class="col-lg-3 col-form-label">Jenis kelamin <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="gender" class="form-control @error('gender') is-invalid @enderror">
-                                    <option value="Laki-laki">Laki-laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                    <option disabled selected>Pilih Kelamin</option>
+                                    <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                                    </option>
+                                    <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>
+                                        Perempuan</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     @error('gender')
@@ -84,23 +87,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row mt-3">
-                            <label class="col-lg-3 col-form-label">Status</label>
-                            <div class="col-lg-9">
-                                <select class="form-control" name="is_active">
-                                    <option value="0" @if (old('is_active') == 0) selected @endif>Tidak Aktif
-                                    </option>
-                                    <option value="1" @if (old('is_active') == 1) selected @endif>Aktif</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <div class="input-group">
                                     <input type="password" name="password_hint"
-                                        class="form-control @error('password_hint') is-invalid @enderror"
-                                        id="passwordInput">
+                                        class="form-control @error('password_hint') is-invalid @enderror" id="passwordInput"
+                                        value="{{ old('password_hint') }}">
                                     <button class="btn btn-outline-secondary" style="width: 50px" type="button"
                                         id="togglePassword">
                                         <span class="fa fa-eye-slash"></span>
@@ -113,6 +106,16 @@
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <label class="col-lg-3 col-form-label">Status</label>
+                            <div class="col-lg-9">
+                                <select class="form-control" name="is_active">
+                                    <option value="0" @if (old('is_active') == 0) selected @endif>Tidak Aktif
+                                    </option>
+                                    <option value="1" @if (old('is_active') == 1) selected @endif>Aktif</option>
+                                </select>
                             </div>
                         </div>
                     </div>

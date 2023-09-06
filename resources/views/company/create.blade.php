@@ -26,8 +26,7 @@
                             <label class="col-lg-3 col-form-label">Nama <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="name"
-                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    required>
+                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                                 <div class="invalid-feedback">
                                     @error('name')
                                         {{ $message }}
@@ -50,7 +49,7 @@
                             <label class="col-lg-3 col-form-label">Direktur Perusahaan <span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <input type="text" name="director" maxlength="255" minlength="5"
+                                <input type="text" name="director"
                                     class="form-control @error('director') is-invalid @enderror"
                                     value="{{ old('director') }}">
                                 <div class="invalid-feedback">
@@ -61,7 +60,7 @@
                             </div>
                         </div>
                         <div class="form-group row mt-3">
-                            <label class="col-lg-3 col-form-label">Status</label>
+                            <label class="col-lg-3 col-form-label">Status <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select class="form-control" name="is_active">
                                     <option value="0" @if (old('is_active') == 0) selected @endif>Tidak Aktif

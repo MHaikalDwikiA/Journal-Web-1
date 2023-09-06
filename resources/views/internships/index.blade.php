@@ -16,45 +16,40 @@
 
     <x-alert />
 
-    <form action="{{ route('internships.index') }}" method="GET" id="filter-form">
-        <div class="row">
-            <div class="col-md-4">
-                <label for="school_year_id" class="form-label">Tahun Pelajaran:</label>
-                <select name="school_year_id" id="school_year_id" class="form-control">
-                    <option value="" selected>Semua Tahun Pelajaran</option>
-                    @foreach ($schoolYears as $schoolYear)
-                        @if ($schoolYear->is_active)
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <form action="{{ route('internships.index') }}" method="GET" id="filter-form" class="flex-grow-1">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="school_year_id" class="form-label">Tahun Pelajaran:</label>
+                    <select name="school_year_id" id="school_year_id" class="js-example-basic-single form-control">
+                        @foreach ($schoolYears as $schoolYear)
                             <option value="{{ $schoolYear->id }}"
                                 {{ request('school_year_id') == $schoolYear->id ? 'selected' : '' }}>
-                                {{ $schoolYear->name }}
+                                {{ $schoolYear->name }}{{ $schoolYear->is_active ? '' : ' (Non-Aktif)' }}
                             </option>
-                        @else
-                            <option value="{{ $schoolYear->id }}"
-                                {{ request('school_year_id') == $schoolYear->id ? 'selected' : '' }}>
-                                {{ $schoolYear->name }} (Non-Aktif)
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="classroom_id" class="form-label">Kelas:</label>
+                    <select name="classroom_id" id="classroom_id" class="js-example-basic-single form-control">
+                        <option selected disabled>Semua Kelas</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <label for="classroom_id" class="form-label">Kelas:</label>
-                <select name="classroom_id" id="classroom_id" class="form-control">
-                    <option value="" selected>Semua Kelas</option>
-                </select>
-            </div>
-            <div class="col-md-4 d-flex">
-                <button type="submit" class="btn btn-primary mt-4">Filter</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
 
     <div class="row mt-2">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped custom-table no-footer mb-0 datatable">
+                        <table class="table table-striped custom-table no-footer mb-0 datatable" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
@@ -74,100 +69,27 @@
                                         <td>{{ $student->phone }}</td>
                                         <td>
                                             @if ($student->internship)
-                                                {{ $student->internship ? $student->internship->company->name : '' }}
-                                        <td class="text-end">
-                                            <a href="{{ route('internships.show', $student->internship->id) }}"
-                                                class="btn btn-sm btn-primary">
-                                                Lihat Siswa
-                                            </a>
+                                                {{ $student->internship->company->name }}
+                                            @else
+                                                -
+                                            @endif
                                         </td>
-                                    @else
-                                        -
                                         <td class="text-end">
-                                            <a class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal{{ $student->id }}">
-                                                Daftar Perusahaan
-                                            </a>
+                                            @if ($student->internship)
+                                                <a href="{{ route('internships.show', $student->internship->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    Lihat Siswa
+                                                </a>
+                                                <a href="https://wa.me/62{{ substr($student->phone, 1) }}?text=Username%3A%20{{ $student->user->username }}%0APassword%3A%20{{ $student->password_hint }}"
+                                                    target="_blank" class="btn btn-sm btn-warning">Kirim Akun</a>
+                                            @else
+                                                <button class="btn btn-sm btn-success open-modal"
+                                                    data-student-id="{{ $student->id }}"
+                                                    data-school-year-id="{{ $student->school_year_id }}">Daftar
+                                                    Perusahaan</button>
+                                            @endif
                                         </td>
-                                @endif
-                                </td>
-                                </tr>
-                                @push('after-body')
-                                    <div class="modal fade" id="exampleModal{{ $student->id }}" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nama Perusahaan</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <form action="{{ route('internships.store') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="student_id" value="{{ $student->id }}">
-                                                    <input type="hidden" name="school_year_id"
-                                                        value="{{ $student->school_year_id }}">
-                                                    <input type="hidden" name="company_advisor_id"
-                                                        value="{{ $student->company_advisor_id }}">
-                                                    <input type="hidden" name="school_advisor_id"
-                                                        value="{{ $student->school_advisor_id }}">
-                                                    <div class="modal-body">
-                                                        <div class="mb-3">
-                                                            <label for="company_id" class="form-label">Masukan Nama
-                                                                Perusahaan</label>
-                                                            <div>
-                                                                <select name="company_id"
-                                                                    class="select-hidden-accessible form-control">
-                                                                    <option value="" disabled selected>Pilih Perusahaan
-                                                                    </option>
-                                                                    @foreach ($companies as $company)
-                                                                        <option value="{{ $company->id }}">
-                                                                            {{ $company->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="company_advisor_id" class="form-label">Masukan Nama
-                                                                Pembimbing Perusahaan</label>
-                                                            <div>
-                                                                <select name="company_advisor_id"
-                                                                    class="select-hidden-accessible form-control">
-                                                                    <option value="" disabled selected>Pilih Pembimbing
-                                                                        Perusahaan
-                                                                    </option>
-                                                                    @foreach ($companyAdvisors as $advisors)
-                                                                        <option value="{{ $advisors->id }}">
-                                                                            {{ $advisors->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="school_advisor_id" class="form-label">Masukan Nama
-                                                                Pembimbing Sekolah</label>
-                                                            <div>
-                                                                <select name="school_advisor_id"
-                                                                    class="select-hidden-accessible form-control">
-                                                                    <option value="" disabled selected>Pilih Pembimbing
-                                                                        Sekolah
-                                                                    </option>
-                                                                    @foreach ($schoolAdvisors as $advisor)
-                                                                        <option value="{{ $advisor->id }}">
-                                                                            {{ $advisor->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Kirim</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endpush
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -177,19 +99,82 @@
         </div>
     </div>
 @endsection
+@push('after-body')
+    <div class="modal fade" id="modalInternship" tabindex="-1" aria-labelledby="internshipModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="internshipModalLabel">Nama Perusahaan</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('internships.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="student_id" id="student_id">
+                    <input type="hidden" name="school_year_id" id="schoolYearId">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="company_id" class="form-label">Masukan Nama Perusahaan</label>
+                            <div>
+                                <select name="company_id" class="select-hidden-accessible form-control" id="company_id">
+                                    <option disabled selected>Pilih Perusahaan</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}">
+                                            {{ $company->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="company_advisor_id" class="form-label">Masukan Nama Pembimbing Perusahaan</label>
+                            <div>
+                                <select name="company_advisor_id" class="select-hidden-accessible form-control"
+                                    id="">
+                                    <option disabled selected>Pilih Pembimbing Perusahaan</option>
+                                    @foreach ($companyAdvisors as $advisors)
+                                        <option value="{{ $advisors->id }}">
+                                            {{ $advisors->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="school_advisor_id" class="form-label">Masukan Nama Pembimbing Sekolah</label>
+                            <div>
+                                <select name="school_advisor_id" class="select-hidden-accessible form-control"
+                                    id="">
+                                    <option disabled selected>Pilih Pembimbing Sekolah</option>
+                                    @foreach ($schoolAdvisors as $advisor)
+                                        <option value="{{ $advisor->id }}">
+                                            {{ $advisor->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endpush
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $('.js-example-basic-single').select2();
             var schoolYearSelect = $("#school_year_id");
             var classroomSelect = $("#classroom_id");
             var studentData = $("#student-data");
-            var classes = @json($classes);
+            var classrooms = @json($classrooms);
 
             function updateClassroomOptions(selectedSchoolYear) {
-                classroomSelect.empty().append('<option value="" selected>Semua Kelas</option>');
-                for (var i = 0; i < classes.length; i++) {
-                    if (classes[i].school_year_id == selectedSchoolYear) {
-                        classroomSelect.append(`<option value="${classes[i].id}">${classes[i].name}</option>`);
+                classroomSelect.empty().append('<option value="" selected disabled>Semua Kelas</option>');
+                for (var i = 0; i < classrooms.length; i++) {
+                    if (classrooms[i].school_year_id == selectedSchoolYear) {
+                        classroomSelect.append(
+                            `<option value="${classrooms[i].id}">${classrooms[i].name}</option>`);
                     }
                 }
             }
@@ -200,6 +185,17 @@
             });
 
             updateClassroomOptions(schoolYearSelect.val());
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.open-modal', function() {
+                var studentId = $(this).data('student-id');
+                var schoolYearId = $(this).data('school-year-id');
+                $('#student_id').val(studentId);
+                $('#schoolYearId').val(schoolYearId);
+                $('#modalInternship').modal('show');
+            });
         });
     </script>
 @endpush

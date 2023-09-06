@@ -37,8 +37,8 @@ class CompanyController extends Controller
         $request->validate(
             [
                 'name' => 'required|max:255',
-                'address' => 'required|max:255',
-                'director' => 'required|max:255',
+                'address' => 'required|max:255|min:5',
+                'director' => 'required|max:255|min:5',
                 'is_active' => 'required|boolean',
             ],
             [
@@ -46,8 +46,10 @@ class CompanyController extends Controller
                 'name.max' => 'Maksimal 255 karakter!',
                 'address.required' => 'Alamat harus diisi!',
                 'address.max' => 'Maksimal 255 karakter!',
+                'address.min' => 'Minimal 5 karakter!',
                 'director.required' => 'Direktur perusahaan harus diisi!',
                 'director.max' => 'Maksimal 255 karakter!',
+                'director.min' => 'Minimal 5 karakter!',
                 'is_active.required' => 'Status harus diisi!',
                 'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!'
             ]
@@ -79,8 +81,8 @@ class CompanyController extends Controller
         $request->validate(
             [
                 'name' => 'required|max:255',
-                'address' => 'required|max:255',
-                'director' => 'required|max:255',
+                'address' => 'required|max:255|min:5',
+                'director' => 'required|max:255|min:5',
                 'is_active' => 'required|boolean',
             ],
             [
@@ -88,10 +90,12 @@ class CompanyController extends Controller
                 'name.max' => 'Maksimal 255 karakter!',
                 'address.required' => 'Alamat harus diisi!',
                 'address.max' => 'Maksimal 255 karakter!',
+                'address.min' => 'Minimal 5 karakter!',
                 'director.required' => 'Direktur perusahaan harus diisi!',
                 'director.max' => 'Maksimal 255 karakter!',
+                'director.min' => 'Minimal 5 karakter!',
                 'is_active.required' => 'Status harus diisi!',
-                'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
+                'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!'
             ]
         );
 

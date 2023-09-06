@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $query->where('is_active', false);
     }
+
+    public function companyAdvisor()
+    {
+    return $this->hasOne(CompanyAdvisor::class);
+    }
+
+    public function schoolAdvisor()
+    {
+    return $this->hasOne(SchoolAdvisor::class);
+    }
 }

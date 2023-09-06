@@ -10,9 +10,12 @@
             Siswa
         @endslot
         @slot('li_1')
-            Siswa
+            Kelas
         @endslot
         @slot('li_2')
+            Siswa {{ $classroom->name }}
+        @endslot
+        @slot('li_3')
             Daftar
         @endslot
         @slot('action_button')
@@ -34,7 +37,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped custom-table no-footer mb-0 datatable">
+                        <table class="table table-striped custom-table no-footer mb-0 datatable" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
@@ -58,7 +61,8 @@
                                         <td class="text-end">
                                             <a href="{{ route('classrooms.studentEdit', ['classroomId' => $classroomId, 'studentId' => $student->id]) }}"
                                                 class="btn btn-sm btn-success">Edit</a>
-                                            <form class="d-inline" action="{{ route('students.remove', $student->id) }}"
+                                            <form class="d-inline"
+                                                action="{{ route('classrooms.studentRemove', [$student->id, $student->classroom->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -86,12 +90,13 @@
                     <h5 class="modal-title" id="ImportSiswaModalLabel">Import Data Siswa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('students.import', $classroomId) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('classrooms.studentImport', $classroomId) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="formFileSm" class="form-label">Pilih File</label>
-                            <input class="form-control form-control-sm" id="formFileSm" type="file" name="import_file"
+                            <input class="form-control" id="formFileSm" type="file" name="import_file"
                                 accept=".xls,.xlsx">
                         </div>
                     </div>
@@ -109,7 +114,8 @@
         $(document).ready(function() {
             $('select[name="classrooms"]').change(function() {
                 var selectedClassroom = $(this).val();
-                var Filter = "{{ route('students.index') }}" + "?classrooms=" + selectedClassroom;
+                var Filter = "{{ route('classrooms.studentIndex', $student->id ?? '') }}" +
+                    "?classrooms=" + selectedClassroom;
                 $('#btn-filter').attr('href', Filter);
             });
         });

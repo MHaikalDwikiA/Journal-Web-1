@@ -46,22 +46,22 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
-            'username' => 'required|alpha_num:ascii|unique:users,username|min:5|max:255',
-            'password' => 'required|confirmed|min:5|max:255',
+            'name' => 'required|max:255|min:5',
+            'username' => 'required|alpha_num:ascii|unique:users,username,|min:5|max:255',
+            'password' => 'nullable|confirmed|min:5|max:255',
             'is_active' => 'required|boolean',
         ], [
             'name.required' => 'Nama harus diisi!',
+            'name.max' => 'Maksimal 255 karakter!',
+            'name.min' => 'Minimal 5 karakter!',
             'username.required' => 'Username harus diisi!',
             'username.alpha_num' => 'Username hanya boleh diisi karakter A-Z a-z 0-9!',
-            'password.required' => 'Password harus diisi!',
-            'name.max' => 'Maksimal 255 karakter!',
+            'username.min' => 'Minimal 5 karakter!',
             'username.max' => 'Maksimal 255 karakter!',
             'username.unique' => 'Username telah digunakan oleh akun lain!',
             'password.max' => 'Maksimal 255 karakter!',
-            'username.min' => 'Minimal 5 karakter!',
             'password.min' => 'Minimal 5 karakter!',
-            'password.confirmed' => 'Password dan Password konfirmasi tidak sama!',
+            'password.confirmed' => 'Password dan Passwork konfirmasi tidak sama!',
             'is_active.required' => 'Status harus diisi!',
             'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
         ]);
@@ -91,22 +91,23 @@ class UserController extends Controller
         abort_if(!$user, 400, 'Pengguna tidak ditemukan');
 
         $request->validate([
-            'name' => 'required|max:255',
-            'username' => 'required|alpha_num:ascii|unique:users,username,' . $user->id . '|min:5|max:255',
+            'name' => 'required|max:255|min:5',
+            'username' => 'required|alpha_num:ascii|unique:users,username|unique:company_advisors,identity|unique:school_advisors,identity|unique:students,identity' . $user->id . '|min:5|max:255',
             'password' => 'nullable|confirmed|min:5|max:255',
             'is_active' => 'required|boolean',
         ], [
             'name.required' => 'Nama harus diisi!',
+            'name.max' => 'Maksimal 255 karakter!',
+            'name.min' => 'Minimal 5 karakter!',
             'username.required' => 'Username harus diisi!',
             'username.alpha_num' => 'Username hanya boleh diisi karakter A-Z a-z 0-9!',
-            'name.max' => 'Maksimal 255 karakter!',
+            'username.min' => 'Minimal 5 karakter!',
             'username.max' => 'Maksimal 255 karakter!',
             'username.unique' => 'Username telah digunakan oleh akun lain!',
             'password.max' => 'Maksimal 255 karakter!',
-            'username.min' => 'Minimal 5 karakter!',
             'password.min' => 'Minimal 5 karakter!',
             'password.confirmed' => 'Password dan Passwork konfirmasi tidak sama!',
-            'is_active.request' => 'Status harus diisi!',
+            'is_active.required' => 'Status harus diisi!',
             'is_active.boolean' => 'Status hanya boleh diisi aktif / tidak aktif!',
         ]);
 
@@ -130,5 +131,4 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->withSuccess('Pengguna berhasil dihapus!');
     }
-
 }

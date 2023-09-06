@@ -11,11 +11,14 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InternshipController;
+use App\Http\Controllers\JournalValidateController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolAdvisorController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentDraftController;
+use App\Http\Controllers\SuggestValidationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +39,27 @@ Route::get('/', function () {
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.process');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::middleware('userAccess:school_advisor,company_advisor')->group(function () {
+    Route::controller(JournalValidateController::class)->prefix('journals')->name('journals.')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::get('/detail/{id}', 'show')->name('show');
+        Route::put('/approve/{id}', 'approve')->name('approve');
+        Route::put('/reject/{id}', 'reject')->name('reject');
+        Route::put('/approveAll', 'approveAll')->name('approveAll');
+    });
+});
+
+Route::middleware('userAccess:company_advisor')->group(function () {
+    Route::controller(SuggestValidationController::class)->prefix('suggestions')->name('suggestions.')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::get('detail/{id}', 'show')->name('show');
+        Route::put('/approve/{id}', 'approve')->name('approve');
+        Route::put('/reject/{id}', 'reject')->name('reject');
+        Route::put('/approveAll', 'approveAll')->name('approveAll');
+    });
+});
 
 Route::middleware([Authenticate::class])->group(function () {
     Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->group(function () {
@@ -70,10 +94,15 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
 
-        Route::get('/{id}/students', 'studentIndex')->name('studentIndex');
-        Route::get('/{id}/students/create', 'studentCreate')->name('studentCreate');
-        Route::get('/{classroomId}/student/{studentId}', 'studentEdit')->name('studentEdit');
-        Route::delete('/{classroomId}/student/{studentId}', 'studentRemove')->name('studentRemove');
+        Route::prefix('/{classroomId}')->group(function () {
+            Route::get('/', 'studentIndex')->name('studentIndex');
+            Route::get('/create', 'studentCreate')->name('studentCreate');
+            Route::post('/', 'studentStore')->name('studentStore');
+            Route::get('/edit/{studentId}', 'studentEdit')->name('studentEdit');
+            Route::put('/{studentId}', 'studentUpdate')->name('studentUpdate');
+            Route::delete('/{studentId}', 'studentRemove')->name('studentRemove');
+            Route::post('/import', 'studentImport')->name('studentImport');
+        });
     });
 
     Route::controller(CompanyAdvisorController::class)->prefix('company-advisors')->name('company-advisors.')->group(function () {
@@ -98,17 +127,6 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
     });
-
-    Route::controller(StudentController::class)->prefix('students')->name('students.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::get('/{id}/edit', 'edit')->name('edit');
-        Route::post('/{id}', 'store')->name('store');
-        Route::put('/{classroomId}/student/{id}', 'update')->name('update');
-        Route::delete('/{id}', 'remove')->name('remove');
-        Route::post('/import/{classroomId}', 'import')->name('import');
-    });
-
 
     Route::controller(SchoolController::class)->prefix('school')->name('school.')->group(function () {
         Route::get('/', 'index')->name('index');
@@ -143,5 +161,11 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::get('/{id}', 'edit')->name('edit');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::controller(StudentDraftController::class)->prefix('studentDrafts')->name('studentDrafts.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::put('/', 'update')->name('update');
+        Route::get('/{id}/detail', 'show')->name('show');
     });
 });
