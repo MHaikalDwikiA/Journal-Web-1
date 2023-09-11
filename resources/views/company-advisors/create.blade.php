@@ -26,7 +26,7 @@
                             <label class="col-lg-3 col-form-label">Perusahaan<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="company_id"
-                                    class="select select2-hidden-accessible @error('company_id') is-invalid @enderror">
+                                    class="form-control js-example-basic-single @error('company_id') is-invalid @enderror">
                                     <option disabled selected>Pilih Perusahaan</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}"

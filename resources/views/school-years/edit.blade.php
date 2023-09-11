@@ -26,7 +26,8 @@
                             <label class="col-lg-3 col-form-label">Tahun Pelajaran <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="name"
-                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror" required>
+                                    class="js-example-basic-single form-control @error('name') is-invalid @enderror"
+                                    required>
                                     @php
                                         $currentYear = date('Y');
                                         $yearsRange = range($currentYear, $currentYear + 10);
@@ -51,7 +52,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Nama Kepala Sekolah<span
-                                class="text-danger">*</span></label>
+                                    class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <input type="text" name="headmaster_name" maxlength="255" minlength="5"
                                     class="form-control @error('headmaster_name') is-invalid @enderror"

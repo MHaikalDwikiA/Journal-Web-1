@@ -54,7 +54,7 @@
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="vocational_program" id="vocational_program"
-                                    class="select select2-hidden-accessible @error('vocational_program') is-invalid @enderror">
+                                    class="js-example-basic-single form-control @error('vocational_program') is-invalid @enderror">
                                     <option value="" disabled selected>Pilih Program Keahlian </option>
                                     @foreach ($vocationalPrograms as $program)
                                         <option value="{{ $program }}"

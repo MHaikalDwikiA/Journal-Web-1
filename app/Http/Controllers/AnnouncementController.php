@@ -25,7 +25,7 @@ class AnnouncementController extends Controller
         $request->validate(
             [
                 'date' => 'required|date',
-                'title' => 'required|max:255',
+                'title' => 'required|max:255|min:5',
                 'description' => 'required',
             ],
             [
@@ -33,6 +33,7 @@ class AnnouncementController extends Controller
                 'date.date' => 'Harus berformat tanggal!',
                 'title.required' => 'Judul harus diisi!',
                 'title.max' => 'Maksimal 255 karakter!',
+                'title.min' => 'Minimal 5 karakter!',
                 'description|required' => 'Deskripsi harus diisi!'
             ]
         );
@@ -67,7 +68,7 @@ class AnnouncementController extends Controller
         $request->validate(
             [
                 'date' => 'required|date',
-                'title' => 'required|max:255',
+                'title' => 'required|max:255|min:5',
                 'description' => 'required',
             ],
             [
@@ -75,6 +76,7 @@ class AnnouncementController extends Controller
                 'date.date' => 'Harus berformat tanggal!',
                 'title.required' => 'Judul harus diisi!',
                 'title.max' => 'Maksimal 255 karakter!',
+                'title.min' => 'Minimal 5 karakter!',
                 'description|required' => 'Deskripsi harus diisi!'
             ]
         );

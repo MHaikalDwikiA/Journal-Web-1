@@ -26,7 +26,7 @@
                             <label class="col-lg-3 col-form-label">Tahun Pelajaran <span class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="name"
-                                    class="select select2-hidden-accessible @error('name') is-invalid @enderror">
+                                    class="form-control js-example-basic-single @error('name') is-invalid @enderror">
                                     @php
                                         $currentYear = date('Y');
                                         $yearsRange = range($currentYear, $currentYear + 5);

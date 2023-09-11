@@ -26,7 +26,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Perusahaan<span class="text-danger">*</span></label>
                             <div class="col-lg-9">
-                                <select name="company_id" class="select select2-hidden-accessible">
+                                <select name="company_id" class="js-example-basic-single form-control">
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->id }}"
                                             {{ old('company_id', $company->company_id) == $company->id ? 'selected' : '' }}>

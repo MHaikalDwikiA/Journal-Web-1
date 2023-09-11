@@ -53,7 +53,7 @@
                                     class="text-danger">*</span></label>
                             <div class="col-lg-9">
                                 <select name="vocational_program" id="vocational_program"
-                                    class="select select2-hidden-accessible @error('vocational_program') is-invalid @enderror">
+                                    class="form-control js-example-basic-single @error('vocational_program') is-invalid @enderror">
                                     <option selected disabled>Pilih Program Keahlian</option>
                                     <option value="Teknik Listrik">Teknik Listrik</option>
                                     <option value="Desain Permodelan dan Informasi Bangunan">Desain Permodelan dan Informasi
