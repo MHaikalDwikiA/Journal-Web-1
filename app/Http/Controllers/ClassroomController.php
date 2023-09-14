@@ -59,11 +59,11 @@ class ClassroomController extends Controller
     {
 
         $schoolYears = SchoolYear::all();
-        $vocationalCompetencies = [
+        $vocationalPrograms = [
             'Teknik Listrik', 'Desain Permodelan dan Informasi Bangunan', 'Rekayasa Perangkat Lunak',
             'Teknik Komputer dan Jaringan', 'Teknik Otomotif', 'Teknik Pemesinan', 'Teknik Elektronika Industri'
         ];
-        $vocationalPrograms = [];
+        $vocationalCompetencies = [];
         $classroom = Classroom::find($id);
         abort_if(!$classroom, 400, 'Kelas tidak ditemukan');
 
