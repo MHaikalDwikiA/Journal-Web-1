@@ -1,16 +1,16 @@
-@section('title', 'Siswa')
+@section('title', 'Persetujuan Data Siswa')
 
 @extends('layout.mainlayout')
 @section('content')
     @component('components.breadcrumb')
         @slot('title')
-            Siswa
+            Persetujuan Data Siswa
         @endslot
         @slot('li_1')
-            Siswa
+            Persetujuan Data Siswa
         @endslot
         @slot('li_2')
-            Lihat Siswa
+            Lihat Persetujuan Data Siswa
         @endslot
     @endcomponent
 
@@ -54,10 +54,10 @@
                                 <label class="col-lg-3 col-form-label">Tanggal Lahir</label>
                                 <div class="col-lg-9">
                                     @if (isset($description['birth_date']))
-                                        <input type="text" class="form-control" value="{{ $description['birth_date'] }}"
+                                        <input type="date" class="form-control" value="{{ $description['birth_date'] }}"
                                             readonly>
                                     @else
-                                        <input type="text" class="form-control" value="-" readonly>
+                                        <input type="date" class="form-control" value="-" readonly>
                                     @endif
                                 </div>
                             </div>
@@ -195,8 +195,41 @@
                 </div>
             </div>
             <div class="card-footer text-end">
+                <form id="updateForm" action="{{ route('studentDrafts.update') }}" method="POST"
+                    style="display: none;">
+                    @method('put')
+                    @csrf
+                    <input type="hidden" name="student_id" id="student_id">
+                    <input type="hidden" name="approval_user_id" id="approval_user_id">
+                    <input type="hidden" name="approval_status" id="approval_status">
+                </form>
+                @if ($studentDraft->approval_status === 'Menunggu Persetujuan')
+                    <button class="btn btn-danger" onclick="tolak()">Tolak</button>
+                    <button class="btn btn-success" onclick="terima()">Terima</button>
+                @endif
                 <a class="btn btn-secondary" href="{{ route('studentDrafts.index') }}">Kembali</a>
             </div>
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        function tolak() {
+            document.getElementById("student_id").value = {{ $studentDraft->student->id }};
+            document.getElementById("approval_user_id").value = {{ auth()->user()->id }};
+
+            document.getElementById("approval_status").value = "Tolak";
+
+            document.getElementById("updateForm").submit();
+        }
+
+        function terima() {
+            document.getElementById("student_id").value = {{ $studentDraft->student->id }};
+            document.getElementById("approval_user_id").value = {{ auth()->user()->id }};
+
+            document.getElementById("approval_status").value = "Terima";
+
+            document.getElementById("updateForm").submit();
+        }
+    </script>
+@endpush

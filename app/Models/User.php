@@ -4,11 +4,12 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +22,8 @@ class User extends Authenticatable
         'password',
         'role',
         'is_active',
-        'photo'
+        'photo',
+        'fcm_token'
     ];
 
     /**
@@ -49,11 +51,16 @@ class User extends Authenticatable
 
     public function companyAdvisor()
     {
-    return $this->hasOne(CompanyAdvisor::class);
+        return $this->hasOne(CompanyAdvisor::class);
     }
 
     public function schoolAdvisor()
     {
-    return $this->hasOne(SchoolAdvisor::class);
+        return $this->hasOne(SchoolAdvisor::class);
+    }
+
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
     }
 }

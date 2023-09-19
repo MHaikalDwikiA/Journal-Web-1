@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AssessmentAspectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Middleware\Authenticate;
 
@@ -94,7 +95,7 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'remove')->name('remove');
 
-        Route::prefix('/{classroomId}')->group(function () {
+        Route::prefix('/{classroomId}/students')->group(function () {
             Route::get('/', 'studentIndex')->name('studentIndex');
             Route::get('/create', 'studentCreate')->name('studentCreate');
             Route::post('/', 'studentStore')->name('studentStore');
@@ -145,12 +146,8 @@ Route::middleware([Authenticate::class])->group(function () {
 
     Route::controller(InternshipController::class)->prefix('internships')->name('internships.')->group(function () {
         Route::get('/', 'index')->name('index');
-        // Route::get('/create', 'create')->name('create');
         Route::get('/{id}', 'show')->name('show');
-        // Route::get('/{id}/edit', 'edit')->name('edit');
         Route::post('/', 'store')->name('store');
-        // Route::put('/{id}', 'update')->name('update');
-        // Route::delete('/{id}', 'remove')->name('remove');
     });
 
     Route::controller(AnnouncementController::class)->prefix('announcements')->name('announcements.')->group(function () {
@@ -158,6 +155,15 @@ Route::middleware([Authenticate::class])->group(function () {
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{id}/detail', 'show')->name('show');
+        Route::get('/{id}', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::controller(AssessmentAspectController::class)->prefix('aspects')->name('aspects.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
         Route::get('/{id}', 'edit')->name('edit');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');

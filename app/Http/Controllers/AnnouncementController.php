@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendAnnouncementNotificationJob;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,8 @@ class AnnouncementController extends Controller
         $announcement->title = $request->title;
         $announcement->description = $request->description;
         $announcement->save();
+
+        SendAnnouncementNotificationJob::dispatch($announcement->id);
 
         return redirect()->route('announcements.index')->withSuccess('Pengumuman berhasil ditambahkan!');
     }

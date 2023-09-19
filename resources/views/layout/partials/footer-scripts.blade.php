@@ -1,6 +1,9 @@
        <!-- jQuery -->
        <script src="{{ URL::asset('/assets/js/jquery-3.6.3.min.js') }}"></script>
 
+       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
        <!-- Slimscroll JS -->
        <script src="{{ URL::asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
 

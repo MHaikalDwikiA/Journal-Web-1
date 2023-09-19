@@ -15,6 +15,21 @@ class StudentDraft extends Model
         'description'
     ];
 
+    function scopeIsPending($query)
+    {
+        return $query->where('approval_status', 'Menunggu Persetujuan');
+    }
+
+    function scopeIsApproved($query)
+    {
+        return $query->where('approval_status', 'Terima');
+    }
+
+    function scopeIsReject($query)
+    {
+        return $query->where('approval_status', 'Tolak');
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');

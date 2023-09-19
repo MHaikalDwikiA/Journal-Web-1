@@ -25,29 +25,29 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <td>Nama</td>
-                                    <td>{{ $journal->internship->student->name }}</td>
+                                    <td>{{ $journal->internship->student->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal</td>
-                                    <td>{{ $journal->date }}</td>
+                                    <td>{{ $journal->date ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td>Aktivitas</td>
-                                    <td>{{ $journal->activity }}</td>
+                                    <td>{{ $journal->activity ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td>Gambar Aktivitas</td>
-                                    <td><img src="{{ \Storage::url($journal->activity_image) }}" class="img-fluid"
+                                    <td><img src="{{ \Storage::url($journal->activity_image ?? '') }}" class="img-fluid"
                                             width="500">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Kompetensi</td>
-                                    <td>{{ $journal->competency->competency }}</td>
+                                    <td>{{ $journal->competency->competency ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td>Deskripsi</td>
-                                    <td>{{ $journal->competency->description }}</td>
+                                    <td>{{ $journal->competency->description ?? '' }}</td>
                                 </tr>
                             </table>
                         </div>

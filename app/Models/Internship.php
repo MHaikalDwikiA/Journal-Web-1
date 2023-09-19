@@ -14,6 +14,7 @@ class Internship extends Model
         'company_advisor_id',
         'working_day'
     ];
+
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');

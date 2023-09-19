@@ -70,9 +70,15 @@
                                 'childs' => [],
                             ],
                             (object) [
-                                'name' => 'Draft',
+                                'name' => 'Persetujuan Data Siswa',
                                 'icon' => 'la la-folder',
                                 'link' => 'studentDrafts',
+                                'childs' => [],
+                            ],
+                            (object) [
+                                'name' => 'Aspek Penilaian',
+                                'icon' => 'la la-certificate',
+                                'link' => 'aspects',
                                 'childs' => [],
                             ],
                             (object) [
@@ -115,6 +121,12 @@
                                 'childs' => [],
                             ],
                             (object) [
+                                'name' => 'Aspek Penilaian',
+                                'icon' => 'la la-certificate',
+                                'link' => 'aspects',
+                                'childs' => [],
+                            ],
+                            (object) [
                                 'title' => 'Akun',
                             ],
                             (object) [
@@ -146,6 +158,12 @@
                                 'name' => 'Jurnal siswa',
                                 'icon' => 'la la-book',
                                 'link' => 'journals',
+                                'childs' => [],
+                            ],
+                            (object) [
+                                'name' => 'Aspek Penilaian',
+                                'icon' => 'la la-certificate',
+                                'link' => 'aspects',
                                 'childs' => [],
                             ],
                             (object) [

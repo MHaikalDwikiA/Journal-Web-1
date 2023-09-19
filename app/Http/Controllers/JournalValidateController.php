@@ -44,7 +44,7 @@ class JournalValidateController extends Controller
         return view('journals.show', compact('journal'));
     }
 
-    public function approv($id)
+    public function approve($id)
     {
         $user = auth()->user();
         $schoolAdvisor = $user->schoolAdvisor;

@@ -17,6 +17,11 @@ class InternshipJournal extends Model
         'approval_at',
     ];
 
+    public function internship()
+    {
+        return $this->belongsTo(Internship::class, 'internship_id');
+    }
+
     public function competency()
     {
         return $this->belongsTo(InternshipCompetency::class, 'competency_id');

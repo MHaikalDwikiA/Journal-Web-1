@@ -1,20 +1,20 @@
-@section('title', 'Daftar Pengumuman')
+@section('title', 'Aspek Penilaian')
 
 @extends('layout.mainlayout')
 @section('content')
     @component('components.breadcrumb')
         @slot('title')
-            Daftar Pengumuman
+            Daftar Aspek Penilaian
         @endslot
         @slot('li_1')
-            Pengumuman
+            Aspek Penilaian
         @endslot
         @slot('li_2')
             Daftar
         @endslot
         @slot('action_button')
-            <a href="{{ route('announcements.create') }}" class="btn add-btn">
-                <i class="fa fa-plus"></i> Tambah Pengumuman Baru
+            <a href="{{ route('aspects.create') }}" class="btn add-btn">
+                <i class="fa fa-plus"></i> Tambah Aspek Penilaian Baru
             </a>
         @endslot
     @endcomponent
@@ -28,33 +28,27 @@
                     <div class="tab-content">
                         <div class="tab-pane show active">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table no-footer mb-0 datatable">
+                                <table class="table table-striped custom-table no-footer mb-0 datatable" width="100%">
                                     <thead>
                                         <tr>
                                             <th width="10%">No</th>
-                                            <th>Tanggal</th>
-                                            <th>Judul</th>
-                                            <th>Deskripsi</th>
+                                            <th>Nama Aspek</th>
                                             <th width="10%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($announcements as $announcement)
+                                        @foreach ($aspects as $aspect)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($announcement->date)->format('d F Y') }}</td>
-                                                <td>{{ $announcement->title }}</td>
-                                                <td>{{ Str::substr($announcement->description, 0, 50) }}</td>
+                                                <td>{{ $aspect->name }}</td>
                                                 <td class="text-end">
-                                                    <a href="{{ route('announcements.edit', $announcement->id) }}"
+                                                    <a href="{{ route('aspects.edit', $aspect->id) }}"
                                                         class="btn btn-success btn-sm">
                                                         Ubah
                                                     </a>
-                                                    <a href="{{ route('announcements.show', $announcement->id) }}"
-                                                        class="btn btn-sm btn-primary">Detail</a>
                                                     <button type="button"
-                                                        data-action="{{ route('announcements.destroy', $announcement->id) }}"
-                                                        data-confirm-text="Anda yakin menghapus Pengumuman ini?"
+                                                        data-action="{{ route('aspects.destroy', $aspect->id) }}"
+                                                        data-confirm-text="Anda yakin menghapus aspek ini?"
                                                         class="btn btn-danger btn-sm btn-delete btn-sm">
                                                         Hapus
                                                     </button>

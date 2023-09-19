@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('student_drafts', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('student_id');
-            $table->unsignedInteger('approval_user_id');
+            $table->unsignedInteger('approval_user_id')->nullable();
             $table->date('request_date');
             $table->date('approval_date')->nullable();
-            $table->string('approval_status')->default('PENDING');
+            $table->string('approval_status')->default('Menunggu Persetujuan');
             $table->text('description')->nullable();
             $table->timestamps();
 

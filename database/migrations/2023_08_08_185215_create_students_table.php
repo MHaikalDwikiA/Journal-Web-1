@@ -10,8 +10,8 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('school_year_id')->nullable()->index();
-            $table->unsignedInteger('classroom_id')->nullable()->index();
+            $table->unsignedInteger('school_year_id')->index();
+            $table->unsignedInteger('classroom_id')->index();
             $table->string('identity')->unique();
             $table->string('name');
             $table->string('phone');
